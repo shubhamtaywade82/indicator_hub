@@ -12,3 +12,62 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+# --- Metrics ---
+# Technical indicator calculations are inherently complex mathematical algorithms.
+# Raising thresholds avoids fragmenting cohesive financial formulas into unreadable pieces.
+Metrics/MethodLength:
+  Max: 40
+  CountAsOne:
+    - array
+    - hash
+
+Metrics/AbcSize:
+  Max: 65
+
+Metrics/CyclomaticComplexity:
+  Max: 17
+
+Metrics/PerceivedComplexity:
+  Max: 22
+
+Metrics/BlockLength:
+  Max: 35
+  AllowedMethods:
+    - describe
+    - context
+    - it
+
+Metrics/ModuleLength:
+  Max: 350
+
+Metrics/ParameterLists:
+  Max: 10
+  CountKeywordArgs: false
+
+# KST parameters (r1-r4, s1-s4) are industry-standard abbreviations
+Naming/MethodParameterName:
+  AllowedNames:
+    - r1
+    - r2
+    - r3
+    - r4
+    - s1
+    - s2
+    - s3
+    - s4
+
+# --- RSpec ---
+# Indicator specs naturally require multiple assertions to verify mathematical correctness
+# and multiple shared data fixtures.
+RSpec/MultipleExpectations:
+  Max: 6
+
+RSpec/ExampleLength:
+  Max: 12
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+Layout/LineLength:
+  Max: 150

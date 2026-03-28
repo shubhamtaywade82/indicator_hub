@@ -9,7 +9,9 @@ Gem::Specification.new do |spec|
   spec.email = ["shubhamtaywade82@gmail.com"]
 
   spec.summary = "A unified interface for technical analysis indicators in Ruby."
-  spec.description = "IndicatorHub provides a clean, idiomatic interface for technical analysis by aggregating multiple Ruby gems (ruby-technical-analysis, technical-analysis, indicators) and optionally leveraging TA-Lib for high performance."
+  spec.description = "IndicatorHub provides a clean, idiomatic interface for technical analysis " \
+                     "by aggregating multiple Ruby gems (ruby-technical-analysis, technical-analysis, " \
+                     "indicators) and optionally leveraging TA-Lib for high performance."
   spec.homepage = "https://github.com/shubhamtaywade/indicator_hub"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"

@@ -11,7 +11,7 @@ module IndicatorHub
       # @param data [Array<Numeric>] The input data points.
       # @param period [Integer] The period (default: 1).
       # @return [Array<Float>] The calculated CR values.
-      def self.calculate(data, period: 1)
+      def self.calculate(data, period: 1) # rubocop:disable Lint/UnusedMethodArgument
         return [] if data.empty?
 
         start_price = data.first.to_f

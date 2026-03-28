@@ -71,9 +71,7 @@ module IndicatorHub
     # @return [Array<T.any(Hash, Numeric)>] The sorted data
     sig { returns(T::Array[T.any(T::Hash[T.untyped, T.untyped], Numeric)]) }
     def sorted_data
-      unless data.first.is_a?(Hash) && (data.first[:date] || data.first["date"] || data.first[:date_time] || data.first["date_time"])
-        return data
-      end
+      return data unless data.first.is_a?(Hash) && (data.first[:date] || data.first["date"] || data.first[:date_time] || data.first["date_time"])
 
       data.sort_by { |v| v[:date] || v["date"] || v[:date_time] || v["date_time"] }
     end

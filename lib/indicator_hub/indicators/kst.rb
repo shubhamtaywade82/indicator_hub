@@ -61,7 +61,7 @@ module IndicatorHub
         end
       end
 
-      def self.calculate_rcma(data, index, roc, sma)
+      def self.calculate_rcma(data, index, roc, sma) # :nodoc:
         # ROC = (Price(t) - Price(t-roc)) / Price(t-roc) * 100
         # RCMA = SMA of ROC over 'sma' periods
         return nil if index < (roc + sma)

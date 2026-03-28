@@ -376,8 +376,9 @@ RSpec.describe IndicatorHub do
       expect(result[0..75]).to all(be_nil)
       non_nil = result.compact
       expect(non_nil).not_to be_empty
+      ichimoku_keys = %i[tenkan_sen kijun_sen senkou_span_a senkou_span_b chikou_span]
       non_nil.each do |v|
-        %i[tenkan_sen kijun_sen senkou_span_a senkou_span_b chikou_span].each do |key|
+        ichimoku_keys.each do |key|
           expect(v).to have_key(key)
         end
       end

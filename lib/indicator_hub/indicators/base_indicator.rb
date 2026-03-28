@@ -41,16 +41,6 @@ module IndicatorHub
         data.to_ohlc
       end
 
-      private
-
-      # Validates options, numeric integrity, and minimum data length.
-      # @raise [Validation::Error] if validation fails.
-      def validate!
-        Validation.validate_options(options, self.class.valid_options)
-        Validation.validate_numeric_data(numeric_data)
-        Validation.validate_length(numeric_data, self.class.min_data_size(options))
-      end
-
       # Defines the list of valid option keys for this indicator.
       # @return [Array<Symbol>]
       def self.valid_options
@@ -62,6 +52,16 @@ module IndicatorHub
       # @return [Integer]
       def self.min_data_size(_options)
         1
+      end
+
+      private
+
+      # Validates options, numeric integrity, and minimum data length.
+      # @raise [Validation::Error] if validation fails.
+      def validate!
+        Validation.validate_options(options, self.class.valid_options)
+        Validation.validate_numeric_data(numeric_data)
+        Validation.validate_length(numeric_data, self.class.min_data_size(options))
       end
     end
   end
