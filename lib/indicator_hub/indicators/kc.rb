@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Keltner Channel (KC)
     class KC
-      def self.calculate(data, period: 10)
+      def self.calculate(data, period: 20, multiplier: 1.5)
         output = []
         typical_prices = []
         trading_ranges = []
@@ -14,18 +14,18 @@ module IndicatorHub
         data.each do |v|
           tp = (v[:high] + v[:low] + v[:close]) / 3.0
           tr = v[:high] - v[:low]
-          
+
           typical_prices << tp
           trading_ranges << tr
-          
+
           if typical_prices.size == period
             mb = CalculationHelpers.average(typical_prices)
             tra = CalculationHelpers.average(trading_ranges)
-            
+
             output << {
-              upper: mb + tra,
+              upper: mb + (tra * multiplier),
               middle: mb,
-              lower: mb - tra
+              lower: mb - (tra * multiplier)
             }
             typical_prices.shift
             trading_ranges.shift

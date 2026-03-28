@@ -1,48 +1,66 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
+require_relative "sma"
 
 module IndicatorHub
   module Indicators
     # Know Sure Thing (KST)
     class KST
-      def self.calculate(data, roc1: 10, roc2: 15, roc3: 20, roc4: 30, sma1: 10, sma2: 10, sma3: 10, sma4: 15)
-        output = []
-        # The lookback required is based on the largest (roc + sma)
-        max_lookback = [roc1 + sma1, roc2 + sma2, roc3 + sma3, roc4 + sma4].max
-        
-        data.each_with_index do |_, i|
-          if i < max_lookback - 2
-            output << nil
+      def self.calculate(data, r1: 10, r2: 15, r3: 20, r4: 30, s1: 10, s2: 10, s3: 10, s4: 15, signal: 9)
+        # Use close prices for KST
+        closes = data.map do |v|
+          if v.is_a?(Hash)
+            (v[:close] || v["close"]).to_f
           else
-            rcma1 = calculate_rcma(data, i, roc1, sma1)
-            rcma2 = calculate_rcma(data, i, roc2, sma2)
-            rcma3 = calculate_rcma(data, i, roc3, sma3)
-            rcma4 = calculate_rcma(data, i, roc4, sma4)
-
-            if rcma1 && rcma2 && rcma3 && rcma4
-              kst = (1 * rcma1) + (2 * rcma2) + (3 * rcma3) + (4 * rcma4)
-              output << kst
-            else
-              output << nil
-            end
+            v.to_f
           end
         end
-        output
+
+        kst_values = []
+        closes.each_with_index do |_, i|
+          rcma1 = calculate_rcma(closes, i, r1, s1)
+          rcma2 = calculate_rcma(closes, i, r2, s2)
+          rcma3 = calculate_rcma(closes, i, r3, s3)
+          rcma4 = calculate_rcma(closes, i, r4, s4)
+
+          if rcma1 && rcma2 && rcma3 && rcma4
+            kst = (1.0 * rcma1) + (2.0 * rcma2) + (3.0 * rcma3) + (4.0 * rcma4)
+            kst_values << kst
+          else
+            kst_values << nil
+          end
+        end
+
+        # Calculate signal line (SMA of KST)
+        valid_kst = kst_values.compact
+        if valid_kst.size >= signal
+          signal_line_valid = SMA.calculate(valid_kst, period: signal)
+          lead_nils_count = kst_values.count(nil)
+          full_signal_line = Array.new(lead_nils_count, nil) + signal_line_valid
+        else
+          full_signal_line = Array.new(kst_values.size, nil)
+        end
+
+        kst_values.zip(full_signal_line).map do |kst, sig|
+          { kst: kst, signal: sig }
+        end
       end
 
       private
 
       def self.calculate_rcma(data, index, roc, sma)
-        return nil if index < (roc + sma - 2)
-        
+        # ROC = (Price(t) - Price(t-roc)) / Price(t-roc) * 100
+        # RCMA = SMA of ROC over 'sma' periods
+        return nil if index < (roc + sma)
+
         roc_data = []
         (index - sma + 1..index).each do |i|
-          last_price = data[i]
-          starting_price = data[i - roc + 1]
-          return nil if starting_price.nil? || starting_price == 0
-          
-          roc_data << (last_price - starting_price) / starting_price.to_f * 100.0
+          current_price = data[i]
+          past_price = data[i - roc]
+          return nil if past_price.nil? || past_price == 0
+
+          roc_data << (current_price - past_price) / past_price.to_f * 100.0
         end
         CalculationHelpers.average(roc_data)
       end

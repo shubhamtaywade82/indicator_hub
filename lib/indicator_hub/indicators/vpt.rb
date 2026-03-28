@@ -1,0 +1,30 @@
+# frozen_string_literal: true
+
+require_relative "../calculation_helpers"
+
+module IndicatorHub
+  module Indicators
+    # Volume-price Trend (VPT)
+    class VPT
+      def self.calculate(data)
+        output = []
+        prev_vpt = 0.0
+        
+        data.each_with_index do |val, i|
+          if i == 0
+            output << nil
+            next
+          end
+
+          prev = data[i - 1]
+          # VPT = prev_vpt + (volume * (close - prev_close) / prev_close)
+          vpt = prev_vpt + (val[:volume] * (val[:close] - prev[:close]) / prev[:close].to_f)
+          output << vpt
+          prev_vpt = vpt
+        end
+
+        output
+      end
+    end
+  end
+end

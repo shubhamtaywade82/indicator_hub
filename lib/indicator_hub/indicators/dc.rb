@@ -8,21 +8,23 @@ module IndicatorHub
     class DC
       def self.calculate(data, period: 20)
         output = []
-        period_values = []
 
-        data.each do |v|
-          period_values << v
-          if period_values.size == period
-            upper = period_values.max
-            lower = period_values.min
+        data.each_with_index do |_, i|
+          if i < period - 1
+            output << { upper: nil, middle: nil, lower: nil }
+          else
+            period_data = data[(i - period + 1)..i]
+            highs = period_data.map { |v| (v[:high] || v["high"]).to_f }
+            lows = period_data.map { |v| (v[:low] || v["low"]).to_f }
+            
+            upper = highs.max
+            lower = lows.min
+            
             output << {
               upper: upper,
               middle: (upper + lower) / 2.0,
               lower: lower
             }
-            period_values.shift
-          else
-            output << nil
           end
         end
         output

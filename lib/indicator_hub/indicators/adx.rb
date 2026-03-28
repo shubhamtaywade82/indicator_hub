@@ -70,7 +70,7 @@ module IndicatorHub
         end
 
         # Prepend nil for the initial period where TR/DM are being calculated
-        Array.new(period, nil) + output
+        Array.new(period - 1, nil) + output
       end
 
       def self.smooth(data, period)

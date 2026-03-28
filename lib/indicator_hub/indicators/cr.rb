@@ -6,7 +6,7 @@ module IndicatorHub
   module Indicators
     # Cumulative Return (CR)
     class CR
-      def self.calculate(data)
+      def self.calculate(data, period: 1)
         return [] if data.empty?
         
         start_price = data.first.to_f

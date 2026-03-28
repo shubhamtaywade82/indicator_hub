@@ -93,4 +93,218 @@ RSpec.describe IndicatorHub do
       expect(result.last).to have_key(:senkou_span_a)
     end
   end
+
+  describe "Additional Indicators" do
+    let(:ohlcv_data) do
+      Array.new(100) { |i| { open: 10 + i, high: 12 + i, low: 9 + i, close: 11 + i, volume: 1000 + (i * 10) } }
+    end
+
+    it "calculates adi" do
+      result = IndicatorHub.adi(ohlcv_data)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates adtv" do
+      result = IndicatorHub.adtv(ohlcv_data, period: 20)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates adx" do
+      result = IndicatorHub.adx(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates ao" do
+      result = IndicatorHub.ao(ohlcv_data)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates atr" do
+      result = IndicatorHub.atr(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates cci" do
+      result = IndicatorHub.cci(ohlcv_data, period: 20)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates cmf" do
+      result = IndicatorHub.cmf(ohlcv_data, period: 20)
+      expect(result.size).to eq(100)
+      expect(result.last).to be_a(Numeric)
+    end
+
+    it "calculates cmo" do
+      result = IndicatorHub.cmo(data, period: 14)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates cr" do
+      result = IndicatorHub.cr(ohlcv_data, period: 20)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates dc" do
+      result = IndicatorHub.dc(ohlcv_data, period: 20)
+      expect(result.last).to have_key(:upper)
+      expect(result.last).to have_key(:middle)
+      expect(result.last).to have_key(:lower)
+    end
+
+    it "calculates dlr" do
+      result = IndicatorHub.dlr(data)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates dpo" do
+      result = IndicatorHub.dpo(data, period: 5)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates dr" do
+      result = IndicatorHub.dr(data)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates envelopes_ema" do
+      result = IndicatorHub.envelopes_ema(ohlcv_data, period: 20)
+      expect(result.last).to have_key(:upper)
+      expect(result.last).to have_key(:lower)
+    end
+
+    it "calculates eom" do
+      result = IndicatorHub.eom(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates fi" do
+      result = IndicatorHub.fi(ohlcv_data, period: 13)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates imi" do
+      result = IndicatorHub.imi(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates kc" do
+      result = IndicatorHub.kc(ohlcv_data, period: 20)
+      expect(result.last).to have_key(:upper)
+      expect(result.last).to have_key(:middle)
+      expect(result.last).to have_key(:lower)
+    end
+
+    it "calculates kst" do
+      result = IndicatorHub.kst(ohlcv_data)
+      expect(result.last).to have_key(:kst)
+      expect(result.last).to have_key(:signal)
+    end
+
+    it "calculates mfi" do
+      result = IndicatorHub.mfi(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates mi" do
+      result = IndicatorHub.mi(ohlcv_data, period: 25)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates nvi" do
+      result = IndicatorHub.nvi(ohlcv_data)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates obv" do
+      result = IndicatorHub.obv(ohlcv_data)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates obv_mean" do
+      result = IndicatorHub.obv_mean(ohlcv_data, period: 10)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates pivot_points" do
+      result = IndicatorHub.pivot_points(ohlcv_data)
+      expect(result.last).to have_key(:p)
+      expect(result.last).to have_key(:r1)
+      expect(result.last).to have_key(:s1)
+    end
+
+    it "calculates price_channel" do
+      result = IndicatorHub.price_channel(ohlcv_data, period: 20)
+      expect(result.last).to have_key(:upper)
+      expect(result.last).to have_key(:lower)
+    end
+
+    it "calculates qstick" do
+      result = IndicatorHub.qstick(ohlcv_data, period: 10)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates rmi" do
+      result = IndicatorHub.rmi(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates roc" do
+      result = IndicatorHub.roc(data, period: 5)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates so" do
+      result = IndicatorHub.so(ohlcv_data)
+      expect(result.last).to have_key(:k)
+      expect(result.last).to have_key(:d)
+    end
+
+    it "calculates trix" do
+      result = IndicatorHub.trix(data, period: 5)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates tsi" do
+      result = IndicatorHub.tsi(data)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates uo" do
+      result = IndicatorHub.uo(ohlcv_data)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates vi" do
+      result = IndicatorHub.vi(ohlcv_data, period: 14)
+      expect(result.last).to have_key(:plus_vi)
+      expect(result.last).to have_key(:minus_vi)
+    end
+
+    it "calculates volume_oscillator" do
+      result = IndicatorHub.volume_oscillator(ohlcv_data, short_period: 5, long_period: 10)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates vpt" do
+      result = IndicatorHub.vpt(ohlcv_data)
+      expect(result.size).to eq(100)
+    end
+
+    it "calculates wilders_smoothing" do
+      result = IndicatorHub.wilders_smoothing(data, period: 5)
+      expect(result.size).to eq(data.size)
+    end
+
+    it "calculates wr" do
+      result = IndicatorHub.wr(ohlcv_data, period: 14)
+      expect(result.size).to eq(100)
+    end
+  end
 end
