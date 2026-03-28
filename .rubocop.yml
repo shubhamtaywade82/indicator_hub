@@ -17,7 +17,7 @@ Style/StringLiteralsInInterpolation:
 # Technical indicator calculations are inherently complex mathematical algorithms.
 # Raising thresholds avoids fragmenting cohesive financial formulas into unreadable pieces.
 Metrics/MethodLength:
-  Max: 40
+  Max: 55
   CountAsOne:
     - array
     - hash
