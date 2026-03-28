@@ -6,6 +6,8 @@ RSpec.describe IndicatorHub do
   let(:data) { [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] }
   let(:hash_data) { data.map { |v| { close: v.to_f } } }
 
+  let(:large_data) { Array.new(100) { |i| 10.0 + Math.sin(i).abs * 10.0 } }
+
   describe ".sma" do
     it "calculates simple moving average correctly" do
       result = IndicatorHub.sma(data, period: 5)
@@ -142,8 +144,8 @@ RSpec.describe IndicatorHub do
     end
 
     it "calculates cmo" do
-      result = IndicatorHub.cmo(data, period: 14)
-      expect(result.size).to eq(data.size)
+      result = IndicatorHub.cmo(large_data, period: 14)
+      expect(result.size).to eq(100)
     end
 
     it "calculates cr" do
