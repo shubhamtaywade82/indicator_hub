@@ -45,8 +45,12 @@ module IndicatorHub
               avg_loss = CalculationHelpers.wilder_smoothing(avg_loss, losses.last, period)
             end
 
-            rs = avg_loss.zero? ? 0 : (avg_gain / avg_loss)
-            rsi = 100.0 - (100.0 / (1.0 + rs))
+            if avg_loss.zero?
+              rsi = avg_gain.zero? ? 0.0 : 100.0
+            else
+              rs = avg_gain / avg_loss
+              rsi = 100.0 - (100.0 / (1.0 + rs))
+            end
             output << rsi
             gains.shift
             losses.shift
