@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Ease of Movement (EOM).
-    # EOM is a momentum oscillator that emphasizes the relationship between 
+    # EOM is a momentum oscillator that emphasizes the relationship between
     # price change and volume.
     class EOM
       # Calculates the Ease of Movement.
@@ -25,20 +25,20 @@ module IndicatorHub
           end
 
           distance_moved = ((v[:high] + v[:low]) / 2.0) - ((prev_v[:high] + prev_v[:low]) / 2.0)
-          
-          range = (v[:high] - v[:low])
-          box_ratio = range == 0 ? 0 : (v[:volume] / 100_000_000.0) / range
 
-          emv = box_ratio == 0 ? 0 : distance_moved / box_ratio
+          range = (v[:high] - v[:low])
+          box_ratio = range.zero? ? 0 : (v[:volume] / 100_000_000.0) / range
+
+          emv = box_ratio.zero? ? 0 : distance_moved / box_ratio
           emv_values << emv
-          
+
           if emv_values.size == period
             output << CalculationHelpers.average(emv_values)
             emv_values.shift
           else
             output << nil
           end
-          
+
           prev_v = v
         end
         output

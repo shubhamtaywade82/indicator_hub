@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Weighted Moving Average (WMA).
-    # WMA is a moving average that assigns more weight to recent data points 
+    # WMA is a moving average that assigns more weight to recent data points
     # and less weight to past data points.
     class WMA
       # Calculates the Weighted Moving Average.

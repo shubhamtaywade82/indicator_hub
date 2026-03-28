@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Intraday Momentum Index (IMI).
-    # IMI is a technical indicator that combines candlestick analysis with 
+    # IMI is a technical indicator that combines candlestick analysis with
     # the Relative Strength Index (RSI).
     class IMI
       # Calculates the Intraday Momentum Index.
@@ -14,8 +14,8 @@ module IndicatorHub
       # @return [Array<Float, nil>] The calculated IMI values.
       def self.calculate(data, period: 14)
         output = []
-        
-        data.each_with_index do |val, i|
+
+        data.each_with_index do |_val, i|
           if i < period - 1
             output << nil
             next
@@ -33,7 +33,7 @@ module IndicatorHub
             end
           end
 
-          if (gsum + lsum) == 0
+          if (gsum + lsum).zero?
             output << 0.0
           else
             imi = 100.0 * gsum / (gsum + lsum)

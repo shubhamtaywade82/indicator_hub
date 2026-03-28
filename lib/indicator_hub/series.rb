@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # typed: true
 
-require 'sorbet-runtime'
+require "sorbet-runtime"
 
 module IndicatorHub
   # Data structure for handling OHLCV and series data.
@@ -71,7 +71,10 @@ module IndicatorHub
     # @return [Array<T.any(Hash, Numeric)>] The sorted data
     sig { returns(T::Array[T.any(T::Hash[T.untyped, T.untyped], Numeric)]) }
     def sorted_data
-      return data unless data.first.is_a?(Hash) && (data.first[:date] || data.first["date"] || data.first[:date_time] || data.first["date_time"])
+      unless data.first.is_a?(Hash) && (data.first[:date] || data.first["date"] || data.first[:date_time] || data.first["date_time"])
+        return data
+      end
+
       data.sort_by { |v| v[:date] || v["date"] || v[:date_time] || v["date_time"] }
     end
   end

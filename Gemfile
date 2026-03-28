@@ -11,9 +11,9 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 
 gem "rubocop", "~> 1.21"
-gem "yard", "~> 0.9"
-gem "sorbet", :group => :development
+gem "sorbet", group: :development
 gem "sorbet-runtime"
+gem "yard", "~> 0.9"
 group :development, :test do
   gem "simplecov", require: false
   gem "tapioca", require: false

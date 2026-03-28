@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../validation'
-require_relative '../series'
-require_relative '../calculation_helpers'
+require_relative "../validation"
+require_relative "../series"
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators

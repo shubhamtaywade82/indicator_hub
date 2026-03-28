@@ -26,15 +26,17 @@ RSpec.describe IndicatorHub do
       # For first period, EMA = SMA
       result = IndicatorHub.ema(data, period: 5)
       expect(result[4]).to eq(12.0)
-      
+
       # Subsequent: (15 - 12) * (2/6) + 12 = 3 * 0.3333 + 12 = 1 + 12 = 13
       expect(result[5]).to be_within(0.01).of(13.0)
     end
   end
 
   describe ".rsi" do
-    let(:rsi_data) { [44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42, 45.84, 46.08, 45.89, 46.03, 45.61, 46.28, 46.28, 46.00] }
-    
+    let(:rsi_data) do
+      [44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42, 45.84, 46.08, 45.89, 46.03, 45.61, 46.28, 46.28, 46.00]
+    end
+
     it "calculates relative strength index" do
       result = IndicatorHub.rsi(rsi_data, period: 14)
       expect(result.size).to eq(rsi_data.size)

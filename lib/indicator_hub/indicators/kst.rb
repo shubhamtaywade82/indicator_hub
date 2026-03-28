@@ -6,7 +6,7 @@ require_relative "sma"
 module IndicatorHub
   module Indicators
     # Know Sure Thing (KST).
-    # KST is a momentum oscillator based on the smoothed rate-of-change of four 
+    # KST is a momentum oscillator based on the smoothed rate-of-change of four
     # different timeframes.
     class KST
       # Calculates the Know Sure Thing.
@@ -61,8 +61,6 @@ module IndicatorHub
         end
       end
 
-      private
-
       def self.calculate_rcma(data, index, roc, sma)
         # ROC = (Price(t) - Price(t-roc)) / Price(t-roc) * 100
         # RCMA = SMA of ROC over 'sma' periods
@@ -72,7 +70,7 @@ module IndicatorHub
         (index - sma + 1..index).each do |i|
           current_price = data[i]
           past_price = data[i - roc]
-          return nil if past_price.nil? || past_price == 0
+          return nil if past_price.nil? || past_price.zero?
 
           roc_data << (current_price - past_price) / past_price.to_f * 100.0
         end

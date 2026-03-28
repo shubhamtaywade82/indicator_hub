@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'base_indicator'
+require_relative "base_indicator"
 
 module IndicatorHub
   module Indicators
     # Simple Moving Average (SMA).
-    # SMA is a basic technical indicator that calculates the average price over a 
+    # SMA is a basic technical indicator that calculates the average price over a
     # specified number of periods.
     class SMA < BaseIndicator
       # Calculates the Simple Moving Average.
@@ -18,7 +18,7 @@ module IndicatorHub
       # Defines the list of valid option keys for this indicator.
       # @return [Array<Symbol>]
       def self.valid_options
-        [:field, :period]
+        %i[field period]
       end
 
       # Defines the minimum number of data points required for calculation.

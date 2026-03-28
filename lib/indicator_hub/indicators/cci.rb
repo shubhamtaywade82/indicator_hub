@@ -25,8 +25,8 @@ module IndicatorHub
           window = tp_values[(i - period + 1)..i]
           sma = CalculationHelpers.average(window)
           mad = CalculationHelpers.mean_absolute_deviation(window, sma)
-          
-          if mad == 0
+
+          if mad.zero?
             output << 0.0
           else
             cci = (tp - sma) / (constant * mad)

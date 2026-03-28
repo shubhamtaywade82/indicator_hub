@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Relative Strength Index (RSI).
     # RSI is a momentum oscillator that measures the speed and change of price movements.
-    # It oscillates between 0 and 100. Traditionally, RSI is considered overbought when 
+    # It oscillates between 0 and 100. Traditionally, RSI is considered overbought when
     # above 70 and oversold when below 30.
     class RSI
       # Calculates the Relative Strength Index.
@@ -20,19 +20,19 @@ module IndicatorHub
         gains = []
         losses = []
         prev_price = data.first
-        
+
         avg_gain = nil
         avg_loss = nil
 
         data.each_with_index do |price, index|
-          if index == 0
+          if index.zero?
             output << nil
             next
           end
 
           change = price - prev_price
-          gains << (change > 0 ? change : 0.0)
-          losses << (change < 0 ? change.abs : 0.0)
+          gains << (change.positive? ? change : 0.0)
+          losses << (change.negative? ? change.abs : 0.0)
 
           if gains.size == period
             if avg_gain.nil?
@@ -45,7 +45,7 @@ module IndicatorHub
               avg_loss = CalculationHelpers.wilder_smoothing(avg_loss, losses.last, period)
             end
 
-            rs = avg_loss == 0 ? 0 : (avg_gain / avg_loss)
+            rs = avg_loss.zero? ? 0 : (avg_gain / avg_loss)
             rsi = 100.0 - (100.0 / (1.0 + rs))
             output << rsi
             gains.shift

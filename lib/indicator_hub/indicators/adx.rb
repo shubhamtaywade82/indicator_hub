@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Average Directional Index (ADX).
-    # ADX is used to quantify trend strength. It is calculated based on the 
+    # ADX is used to quantify trend strength. It is calculated based on the
     # moving average of price range expansion over a given period of time.
     class ADX
       # Calculates the Average Directional Index.
@@ -19,7 +19,7 @@ module IndicatorHub
         tr = []
 
         data.each_with_index do |val, i|
-          if i == 0
+          if i.zero?
             plus_dm << 0.0
             minus_dm << 0.0
             tr << (val[:high] - val[:low])
@@ -30,17 +30,17 @@ module IndicatorHub
           high_diff = val[:high] - prev[:high]
           low_diff = prev[:low] - val[:low]
 
-          if high_diff > low_diff && high_diff > 0
-            plus_dm << high_diff
-          else
-            plus_dm << 0.0
-          end
+          plus_dm << if high_diff > low_diff && high_diff.positive?
+                       high_diff
+                     else
+                       0.0
+                     end
 
-          if low_diff > high_diff && low_diff > 0
-            minus_dm << low_diff
-          else
-            minus_dm << 0.0
-          end
+          minus_dm << if low_diff > high_diff && low_diff.positive?
+                        low_diff
+                      else
+                        0.0
+                      end
 
           tr << CalculationHelpers.true_range(val[:high], val[:low], prev[:close])
         end
@@ -56,7 +56,7 @@ module IndicatorHub
 
           plus_di = 100.0 * (s_plus / s_tr)
           minus_di = 100.0 * (s_minus / s_tr)
-          
+
           dx = 100.0 * (plus_di - minus_di).abs / (plus_di + minus_di)
           dx_values << dx
         end
@@ -82,7 +82,7 @@ module IndicatorHub
       def self.smooth(data, period)
         smoothed = []
         current_sum = 0.0
-        
+
         data.each_with_index do |val, i|
           if i < period - 1
             current_sum += val

@@ -5,7 +5,7 @@ require_relative "ema"
 module IndicatorHub
   module Indicators
     # Envelopes EMA.
-    # Envelopes consist of an EMA and two lines plotted at a percentage distance 
+    # Envelopes consist of an EMA and two lines plotted at a percentage distance
     # above and below the EMA.
     class EnvelopesEMA
       # Calculates the Envelopes EMA.
@@ -17,7 +17,7 @@ module IndicatorHub
         # Ensure we're working with numbers, if not, something upstream went wrong,
         # but EMA.calculate will catch it if it expects only numbers.
         ema_values = EMA.calculate(data, period: period)
-        
+
         output = []
         ema_values.each do |ema|
           if ema.nil?

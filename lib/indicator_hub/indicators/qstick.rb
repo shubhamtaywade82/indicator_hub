@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # QStick.
-    # QStick is a technical indicator that identifies the trend of a security's 
+    # QStick is a technical indicator that identifies the trend of a security's
     # price by calculating the moving average of the difference between open and close.
     class QStick
       include CalculationHelpers
@@ -15,7 +17,7 @@ module IndicatorHub
 
         opens = data.map { |d| d[:open] }
         closes = data.map { |d| d[:close] }
-        
+
         diffs = closes.zip(opens).map { |c, o| c - o }
 
         results = []

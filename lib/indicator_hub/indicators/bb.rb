@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Bollinger Bands (BB).
-    # Bollinger Bands are a type of statistical chart characterizing the prices 
+    # Bollinger Bands are a type of statistical chart characterizing the prices
     # and volatility over time of a financial instrument or commodity.
     class BB
       # Calculates the Bollinger Bands.
@@ -26,7 +26,7 @@ module IndicatorHub
             sd = CalculationHelpers.standard_deviation(period_values)
             ub = mb + (standard_deviations * sd)
             lb = mb - (standard_deviations * sd)
-            
+
             output << {
               upper: ub,
               middle: mb,

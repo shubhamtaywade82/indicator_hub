@@ -284,7 +284,8 @@ module IndicatorHub
   # @param high_period [Integer] The high period.
   # @return [Array<Float, nil>] The calculated Ichimoku values.
   def self.ichimoku(data, low_period: 9, medium_period: 26, high_period: 52)
-    Indicators::Ichimoku.calculate(normalize_ohlcv(data), low_period: low_period, medium_period: medium_period, high_period: high_period)
+    Indicators::Ichimoku.calculate(normalize_ohlcv(data), low_period: low_period, medium_period: medium_period,
+                                                          high_period: high_period)
   end
 
   # Calculates the Intraday Momentum Index (IMI).
@@ -317,7 +318,8 @@ module IndicatorHub
   # @param signal [Integer] Signal line period.
   # @return [Array<Float, nil>] The calculated KST values.
   def self.kst(data, r1: 10, r2: 15, r3: 20, r4: 30, s1: 10, s2: 10, s3: 10, s4: 15, signal: 9)
-    Indicators::KST.calculate(normalize_series(data, :close), r1: r1, r2: r2, r3: r3, r4: r4, s1: s1, s2: s2, s3: s3, s4: s4, signal: signal)
+    Indicators::KST.calculate(normalize_series(data, :close), r1: r1, r2: r2, r3: r3, r4: r4, s1: s1, s2: s2, s3: s3,
+                                                              s4: s4, signal: signal)
   end
 
   # Calculates the Moving Average Convergence Divergence (MACD).
@@ -328,7 +330,8 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated MACD values.
   def self.macd(data, fast_period: 12, slow_period: 26, signal_period: 9, field: :close)
-    Indicators::MACD.calculate(normalize_series(data, field), fast_period: fast_period, slow_period: slow_period, signal_period: signal_period)
+    Indicators::MACD.calculate(normalize_series(data, field), fast_period: fast_period, slow_period: slow_period,
+                                                              signal_period: signal_period)
   end
 
   # Calculates the Money Flow Index (MFI).
@@ -417,7 +420,8 @@ module IndicatorHub
   # @param long_period [Integer] The long UO period.
   # @return [Array<Float, nil>] The calculated UO values.
   def self.uo(data, short_period: 7, medium_period: 14, long_period: 28)
-    Indicators::UO.calculate(normalize_ohlcv(data), short_period: short_period, medium_period: medium_period, long_period: long_period)
+    Indicators::UO.calculate(normalize_ohlcv(data), short_period: short_period, medium_period: medium_period,
+                                                    long_period: long_period)
   end
 
   # Calculates the Vortex Indicator (VI).

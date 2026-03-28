@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Mass Index (MI).
-    # MI is a technical indicator used to predict trend reversals by analyzing 
+    # MI is a technical indicator used to predict trend reversals by analyzing
     # the narrowing and widening of the trading range.
     class MI
       # Calculates the Mass Index.
@@ -39,11 +39,7 @@ module IndicatorHub
         ratios = []
         single_ema_values.each_with_index do |s_ema, i|
           d_ema = double_ema_values[i]
-          if s_ema && d_ema && d_ema != 0
-            ratios << s_ema / d_ema
-          else
-            ratios << nil
-          end
+          ratios << (s_ema / d_ema if s_ema && d_ema && d_ema != 0)
         end
 
         output = []
@@ -55,18 +51,12 @@ module IndicatorHub
             current_ratios << ratio
             current_ratios.shift if current_ratios.size > period
 
-            if current_ratios.size == period
-              output << current_ratios.sum
-            else
-              output << nil
-            end
+            output << (current_ratios.sum if current_ratios.size == period)
           end
         end
 
         output
       end
-
-      private
 
       def self.calculate_ema(data, period)
         output = []

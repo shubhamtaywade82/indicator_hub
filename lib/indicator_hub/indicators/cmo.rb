@@ -13,8 +13,8 @@ module IndicatorHub
       # @return [Array<Float, nil>]
       def self.calculate(data, period: 14)
         output = []
-        
-        data.each_with_index do |val, i|
+
+        data.each_with_index do |_val, i|
           if i < period
             output << nil
             next
@@ -27,14 +27,14 @@ module IndicatorHub
             curr = data[i - period + j]
             prev = data[i - period + j - 1]
             diff = curr - prev
-            if diff > 0
+            if diff.positive?
               up_sum += diff
             else
               down_sum += diff.abs
             end
           end
 
-          if (up_sum + down_sum) == 0
+          if (up_sum + down_sum).zero?
             output << 0.0
           else
             cmo = 100.0 * (up_sum - down_sum) / (up_sum + down_sum)

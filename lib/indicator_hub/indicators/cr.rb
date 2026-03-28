@@ -13,7 +13,7 @@ module IndicatorHub
       # @return [Array<Float>] The calculated CR values.
       def self.calculate(data, period: 1)
         return [] if data.empty?
-        
+
         start_price = data.first.to_f
         return Array.new(data.size, 0.0) if start_price.zero?
 

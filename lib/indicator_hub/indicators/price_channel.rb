@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # Price Channel.
-    # Price Channel is a technical indicator that identifies the high and low 
+    # Price Channel is a technical indicator that identifies the high and low
     # prices over a specified period.
     class PriceChannel
       include CalculationHelpers

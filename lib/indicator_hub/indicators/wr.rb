@@ -13,7 +13,7 @@ module IndicatorHub
       # @return [Array<Float, nil>] The calculated Williams %R values.
       def self.calculate(data, period: 14)
         output = []
-        
+
         data.each_with_index do |val, i|
           if i < period - 1
             output << nil

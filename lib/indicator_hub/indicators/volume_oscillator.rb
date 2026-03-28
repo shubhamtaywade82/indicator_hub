@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Volume Oscillator.
-    # Volume Oscillator measures the difference between a fast and slow volume 
+    # Volume Oscillator measures the difference between a fast and slow volume
     # moving average.
     class VolumeOscillator
       # Calculates the Volume Oscillator.
@@ -22,7 +22,7 @@ module IndicatorHub
                        end
 
         Validation.validate_numeric_data(numeric_data)
-        
+
         output = []
         short_period_values = []
         long_period_values = []
@@ -37,7 +37,7 @@ module IndicatorHub
           if long_period_values.size == long_period
             short_sma = CalculationHelpers.average(short_period_values)
             long_sma = CalculationHelpers.average(long_period_values)
-            
+
             vo = if long_sma.zero?
                    0.0
                  else

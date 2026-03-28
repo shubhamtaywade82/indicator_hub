@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # Stochastic Oscillator (SO).
-    # SO is a momentum indicator comparing a particular closing price of a 
+    # SO is a momentum indicator comparing a particular closing price of a
     # security to a range of its prices over a certain period of time.
     class SO
       include CalculationHelpers
@@ -24,15 +26,15 @@ module IndicatorHub
           else
             current_highs = highs[i - k_period + 1..i]
             current_lows = lows[i - k_period + 1..i]
-            
+
             hh = current_highs.max
             ll = current_lows.min
-            
-            if hh == ll
-              fast_ks << 100.0
-            else
-              fast_ks << ((closes[i] - ll) / (hh - ll) * 100.0)
-            end
+
+            fast_ks << if hh == ll
+                         100.0
+                       else
+                         ((closes[i] - ll) / (hh - ll) * 100.0)
+                       end
           end
         end
 

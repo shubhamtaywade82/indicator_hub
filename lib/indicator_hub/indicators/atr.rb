@@ -18,12 +18,12 @@ module IndicatorHub
         current_atr = nil
 
         data.each_with_index do |v, i|
-          if i == 0
-            tr = v[:high] - v[:low]
-          else
-            tr = CalculationHelpers.true_range(v[:high], v[:low], prev_close)
-          end
-          
+          tr = if i.zero?
+                 v[:high] - v[:low]
+               else
+                 CalculationHelpers.true_range(v[:high], v[:low], prev_close)
+               end
+
           tr_values << tr
           prev_close = v[:close]
 

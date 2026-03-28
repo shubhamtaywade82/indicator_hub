@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Awesome Oscillator (AO).
-    # AO is used to measure market momentum. It calculates the difference 
+    # AO is used to measure market momentum. It calculates the difference
     # between a 34-period and 5-period Simple Moving Average of the bar's midpoints.
     class AO
       # Calculates the Awesome Oscillator.

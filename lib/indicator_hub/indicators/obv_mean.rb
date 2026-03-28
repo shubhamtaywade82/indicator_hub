@@ -32,11 +32,7 @@ module IndicatorHub
 
           prior_close = close
 
-          if obvs.size >= period
-            output << IndicatorHub::CalculationHelpers.average(obvs.last(period))
-          else
-            output << nil
-          end
+          output << (IndicatorHub::CalculationHelpers.average(obvs.last(period)) if obvs.size >= period)
         end
 
         output

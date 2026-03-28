@@ -5,7 +5,7 @@ require_relative "ema"
 module IndicatorHub
   module Indicators
     # Force Index (FI).
-    # FI is an oscillator that uses price and volume to assess the power behind 
+    # FI is an oscillator that uses price and volume to assess the power behind
     # a move and identify potential turning points.
     class FI
       # Calculates the Force Index.

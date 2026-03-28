@@ -13,11 +13,11 @@ module IndicatorHub
         prev_price = nil
 
         data.each do |v|
-          if prev_price.nil?
-            output << nil
-          else
-            output << (v.to_f / prev_price.to_f) - 1.0
-          end
+          output << if prev_price.nil?
+                      nil
+                    else
+                      (v.to_f / prev_price) - 1.0
+                    end
           prev_price = v
         end
         output

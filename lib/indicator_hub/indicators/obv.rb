@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # On-Balance Volume (OBV).
-    # OBV is a technical momentum indicator that uses volume flow to predict 
+    # OBV is a technical momentum indicator that uses volume flow to predict
     # changes in stock price.
     class OBV
       # Calculates the On-Balance Volume.

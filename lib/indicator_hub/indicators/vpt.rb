@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Volume-Price Trend (VPT).
-    # VPT is a technical indicator that combines price and volume to confirm 
+    # VPT is a technical indicator that combines price and volume to confirm
     # the strength of a price trend or signal its reversal.
     class VPT
       # Calculates the Volume-Price Trend.
@@ -14,9 +14,9 @@ module IndicatorHub
       def self.calculate(data)
         output = []
         prev_vpt = 0.0
-        
+
         data.each_with_index do |val, i|
-          if i == 0
+          if i.zero?
             output << nil
             next
           end

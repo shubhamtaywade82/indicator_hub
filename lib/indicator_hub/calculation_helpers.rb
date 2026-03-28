@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # typed: true
 
-require 'sorbet-runtime'
+require "sorbet-runtime"
 
 module IndicatorHub
   # Calculation helpers for technical analysis math.
@@ -23,6 +23,7 @@ module IndicatorHub
     sig { params(data: T::Array[Numeric]).returns(Float) }
     def self.average(data)
       return 0.0 if data.empty?
+
       sum(data) / data.size.to_f
     end
 
@@ -38,6 +39,7 @@ module IndicatorHub
     sig { params(data: T::Array[Numeric]).returns(Float) }
     def self.sample_variance(data)
       return 0.0 if data.size <= 1
+
       m = mean(data)
       sum_sq_diff = data.inject(0.0) { |accum, i| accum + (i - m)**2 }
       sum_sq_diff / (data.size - 1).to_f
@@ -58,6 +60,7 @@ module IndicatorHub
     sig { params(data: T::Array[Numeric], mean: Float).returns(Float) }
     def self.mean_absolute_deviation(data, mean)
       return 0.0 if data.empty?
+
       sum_abs_diff = data.inject(0.0) { |accum, i| accum + (i - mean).abs }
       sum_abs_diff / data.size.to_f
     end
@@ -117,6 +120,7 @@ module IndicatorHub
     sig { params(data: T::Array[Numeric]).returns(Float) }
     def self.wma(data)
       return 0.0 if data.empty?
+
       divisor = (data.size * (data.size + 1) / 2.0)
       sum = 0.0
       data.each_with_index do |v, i|

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # Rate of Change (ROC).
-    # ROC is a momentum oscillator that measures the percentage change in price 
+    # ROC is a momentum oscillator that measures the percentage change in price
     # between the current price and the price a certain number of periods ago.
     class ROC
       include CalculationHelpers
@@ -20,12 +22,12 @@ module IndicatorHub
           else
             current_price = prices[i]
             lookback_price = prices[i - period]
-            
-            if lookback_price == 0
-              results << 0.0
-            else
-              results << (((current_price - lookback_price).to_f / lookback_price) * 100).round(4)
-            end
+
+            results << if lookback_price.zero?
+                         0.0
+                       else
+                         (((current_price - lookback_price).to_f / lookback_price) * 100).round(4)
+                       end
           end
         end
         results

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Exponential Moving Average (EMA).
-    # EMA is a type of moving average that places a greater weight and significance 
+    # EMA is a type of moving average that places a greater weight and significance
     # on the most recent data points.
     class EMA
       # Calculates the Exponential Moving Average.
@@ -23,7 +23,7 @@ module IndicatorHub
 
         data.each do |v|
           period_values << v
-          
+
           if period_values.size == period
             ema = CalculationHelpers.ema(v, period_values, period, previous_ema)
             previous_ema = ema

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Detrended Price Oscillator (DPO).
-    # DPO is an indicator that attempts to eliminate trend from price in order to 
+    # DPO is an indicator that attempts to eliminate trend from price in order to
     # make it easier to identify cycles.
     class DPO
       # Calculates the Detrended Price Oscillator.
@@ -15,7 +15,7 @@ module IndicatorHub
       def self.calculate(data, period: 20)
         output = []
         midpoint = (period / 2) + 1
-        
+
         data.each_with_index do |v, i|
           if i < (period + midpoint - 2)
             output << nil

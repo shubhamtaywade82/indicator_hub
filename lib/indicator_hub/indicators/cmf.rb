@@ -38,7 +38,7 @@ module IndicatorHub
           if period_volumes.size == period
             volume_sum = CalculationHelpers.sum(period_volumes)
             mf_volume_sum = CalculationHelpers.sum(period_mf_volumes)
-            
+
             output << (volume_sum.zero? ? 0.0 : mf_volume_sum / volume_sum.to_f)
 
             period_volumes.shift

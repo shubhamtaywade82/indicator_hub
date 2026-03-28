@@ -5,7 +5,7 @@ require_relative "../calculation_helpers"
 module IndicatorHub
   module Indicators
     # Vortex Indicator (VI).
-    # VI is a technical indicator consisting of two lines that identify 
+    # VI is a technical indicator consisting of two lines that identify
     # positive and negative trend movement.
     class VI
       # Calculates the Vortex Indicator.
@@ -19,7 +19,7 @@ module IndicatorHub
         trs = []
 
         data.each_with_index do |val, i|
-          if i == 0
+          if i.zero?
             output << { plus_vi: nil, minus_vi: nil }
             next
           end

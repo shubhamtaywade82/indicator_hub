@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
     # Volume Weighted Average Price (VWAP).
-    # VWAP is a technical analysis indicator used on intraday charts that resets 
+    # VWAP is a technical analysis indicator used on intraday charts that resets
     # at the start of every new trading session.
     class VWAP
       # Calculates the Volume Weighted Average Price.
@@ -22,8 +22,8 @@ module IndicatorHub
           vol = v[:volume].to_f
           cumm_volume_x_typical_price += vol * tp
           cumm_volume += vol
-          
-          vwap = cumm_volume > 0 ? (cumm_volume_x_typical_price / cumm_volume) : 0.0
+
+          vwap = cumm_volume.positive? ? (cumm_volume_x_typical_price / cumm_volume) : 0.0
           output << vwap
         end
         output

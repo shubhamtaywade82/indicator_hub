@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # Relative Momentum Index (RMI).
@@ -20,8 +22,8 @@ module IndicatorHub
         # Calculate momentum changes
         (momentum_period...prices.length).each do |i|
           change = prices[i] - prices[i - momentum_period]
-          ups << (change > 0 ? change : 0)
-          downs << (change < 0 ? change.abs : 0)
+          ups << (change.positive? ? change : 0)
+          downs << (change.negative? ? change.abs : 0)
         end
 
         # Wilder's smoothing on ups and downs
@@ -32,7 +34,7 @@ module IndicatorHub
         (0...avg_ups.length).each do |i|
           if avg_ups[i].nil? || avg_downs[i].nil?
             results << nil
-          elsif avg_downs[i] == 0
+          elsif avg_downs[i].zero?
             results << 100.0
           else
             rs = avg_ups[i].to_f / avg_downs[i]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IndicatorHub
   module Indicators
     # Pivot Points.
@@ -17,15 +19,15 @@ module IndicatorHub
           close = bar[:close]
 
           p = ((high + low + close) / 3.0).round(4)
-          
+
           s1 = ((2 * p) - high).round(4)
           s2 = (p - (high - low)).round(4)
           s3 = (low - (2 * (high - p))).round(4)
-          
+
           r1 = ((2 * p) - low).round(4)
           r2 = (p + (high - low)).round(4)
           r3 = (high + (2 * (p - low))).round(4)
-          
+
           {
             p: p,
             s1: s1,
