@@ -1,43 +1,76 @@
 # IndicatorHub
 
-TODO: Delete this and the text below, and describe your gem
+IndicatorHub is a unified, clean, and idiomatic Ruby gem for technical analysis. It aggregates and optimizes the core math from multiple popular technical analysis gems into a single, high-performance, pure Ruby library.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/indicator_hub`. To experiment with that code, run `bin/console` for an interactive prompt.
+## Key Features
+
+- **Unified API**: Calculate SMA, EMA, RSI, MACD, and Bollinger Bands through a single entry point.
+- **Data Agnostic**: Supports simple price arrays or complex OHLCV hash data.
+- **Pure Ruby**: Zero dependencies by default (math implementations are self-contained).
+- **Optional Performance**: Can optionally leverage `talib_ffi` for high-performance calculations if the C-library is available on the system.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'indicator_hub'
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+And then execute:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+$ bundle install
+```
+
+Or install it yourself:
+
+```bash
+$ gem install indicator_hub
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Simple Price Array
 
-## Development
+```ruby
+require 'indicator_hub'
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+data = [10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# Simple Moving Average
+sma = IndicatorHub.sma(data, period: 5)
+# => [nil, nil, nil, nil, 12.0, 13.0]
+
+# Relative Strength Index
+rsi = IndicatorHub.rsi(data, period: 5)
+```
+
+### OHLCV Data (Hashes)
+
+```ruby
+data = [
+  { date: "2023-01-01", open: 10, high: 12, low: 9, close: 11 },
+  { date: "2023-01-02", open: 11, high: 13, low: 10, close: 12 },
+  # ...
+]
+
+# Calculate SMA on the 'close' field
+sma = IndicatorHub.sma(data, period: 2, field: :close)
+```
+
+### Supported Indicators
+
+- `IndicatorHub.sma(data, period: 20)`
+- `IndicatorHub.ema(data, period: 20)`
+- `IndicatorHub.rsi(data, period: 14)`
+- `IndicatorHub.macd(data, fast_period: 12, slow_period: 26, signal_period: 9)`
+- `IndicatorHub.bb(data, period: 20, standard_deviations: 2)`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/indicator_hub. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/indicator_hub/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/shubhamtaywade/indicator_hub.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the IndicatorHub project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/indicator_hub/blob/master/CODE_OF_CONDUCT.md).
