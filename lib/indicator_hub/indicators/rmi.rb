@@ -1,13 +1,15 @@
 module IndicatorHub
   module Indicators
+    # Relative Momentum Index (RMI).
+    # RMI is a variation of the RSI that uses momentum instead of price change.
     class RMI
       include CalculationHelpers
 
-      # Relative Momentum Index (RMI)
-      # @param data [Array] Array of prices or OHLC hashes
-      # @param period [Integer] RMI smoothing period
-      # @param momentum_period [Integer] Momentum period
-      # @return [Array<Float, nil>] An array of RMI values
+      # Calculates the Relative Momentum Index.
+      # @param data [Array<Numeric, Hash>] Array of prices or OHLCV hashes.
+      # @param period [Integer] RMI smoothing period (default: 14).
+      # @param momentum_period [Integer] Momentum period (default: 5).
+      # @return [Array<Float, nil>] The calculated RMI values.
       def self.calculate(data, period: 14, momentum_period: 5)
         prices = data.is_a?(Array) && data.first.is_a?(Hash) ? data.map { |d| d[:close] } : data
         return Array.new(prices.length, nil) if prices.length < momentum_period + period

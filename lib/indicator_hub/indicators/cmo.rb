@@ -4,9 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Chande Momentum Oscillator (CMO)
+    # Chande Momentum Oscillator (CMO).
+    # CMO is a technical momentum indicator developed by Tushar Chande.
     class CMO
-      def self.calculate(data, period: 9)
+      # Calculates the Chande Momentum Oscillator.
+      # @param data [Array<Numeric>] Input data.
+      # @param period [Integer] Period for CMO calculation.
+      # @return [Array<Float, nil>]
+      def self.calculate(data, period: 14)
         output = []
         
         data.each_with_index do |val, i|

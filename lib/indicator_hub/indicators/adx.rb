@@ -4,8 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Average Directional Index (ADX)
+    # Average Directional Index (ADX).
+    # ADX is used to quantify trend strength. It is calculated based on the 
+    # moving average of price range expansion over a given period of time.
     class ADX
+      # Calculates the Average Directional Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The period for ADX calculation (default: 14).
+      # @return [Array<Float, nil>] The calculated ADX values.
       def self.calculate(data, period: 14)
         output = []
         plus_dm = []

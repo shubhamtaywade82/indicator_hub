@@ -2,8 +2,12 @@
 
 module IndicatorHub
   module Indicators
-    # Daily Return (DR)
+    # Daily Return (DR).
+    # DR is the percentage change in price from one day to the next.
     class DR
+      # Calculates the Daily Return.
+      # @param data [Array<Numeric>] The input data points.
+      # @return [Array<Float, nil>] The calculated DR values.
       def self.calculate(data)
         output = []
         prev_price = nil

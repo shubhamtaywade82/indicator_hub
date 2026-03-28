@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # On-balance Volume (OBV)
+    # On-Balance Volume (OBV).
+    # OBV is a technical momentum indicator that uses volume flow to predict 
+    # changes in stock price.
     class OBV
+      # Calculates the On-Balance Volume.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @return [Array<Float>] The calculated OBV values.
       def self.calculate(data)
         current_obv = 0.0
         output = []

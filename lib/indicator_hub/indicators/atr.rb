@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Average True Range (ATR)
+    # Average True Range (ATR).
+    # ATR is a volatility indicator that shows how much an asset moves, on average, during a given time frame.
     class ATR
+      # Calculates the Average True Range.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The period for ATR (default: 14).
+      # @return [Array<Float, nil>] The calculated ATR values.
       def self.calculate(data, period: 14)
         output = []
         tr_values = []

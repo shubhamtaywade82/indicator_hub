@@ -1,12 +1,15 @@
 module IndicatorHub
   module Indicators
+    # Price Channel.
+    # Price Channel is a technical indicator that identifies the high and low 
+    # prices over a specified period.
     class PriceChannel
       include CalculationHelpers
 
-      # Price Channel
-      # @param data [Array<Hash>] Array of OHLC data
-      # @param period [Integer] The period for the price channel
-      # @return [Array<Hash>] An array containing the upper and lower price channel values
+      # Calculates the Price Channel.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The Price Channel period (default: 20).
+      # @return [Array<Hash>] The calculated Price Channel values { upper: Float, lower: Float }.
       def self.calculate(data, period: 20)
         return [] if data.length < period
 

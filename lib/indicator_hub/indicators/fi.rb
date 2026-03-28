@@ -4,8 +4,14 @@ require_relative "ema"
 
 module IndicatorHub
   module Indicators
-    # Force Index (FI)
+    # Force Index (FI).
+    # FI is an oscillator that uses price and volume to assess the power behind 
+    # a move and identify potential turning points.
     class FI
+      # Calculates the Force Index.
+      # @param data [Array<Numeric, Hash>] Array of prices or OHLCV hashes.
+      # @param period [Integer] The FI period (default: 13).
+      # @return [Array<Float, nil>] The calculated FI values.
       def self.calculate(data, period: 13)
         return [] if data.empty?
 

@@ -1,12 +1,15 @@
 module IndicatorHub
   module Indicators
+    # QStick.
+    # QStick is a technical indicator that identifies the trend of a security's 
+    # price by calculating the moving average of the difference between open and close.
     class QStick
       include CalculationHelpers
 
-      # QStick
-      # @param data [Array<Hash>] Array of OHLC data
-      # @param period [Integer] The period for the QStick
-      # @return [Array<Float, nil>] An array of QStick values
+      # Calculates the QStick.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The QStick period (default: 10).
+      # @return [Array<Float, nil>] The calculated QStick values.
       def self.calculate(data, period: 10)
         return [] if data.length < period
 

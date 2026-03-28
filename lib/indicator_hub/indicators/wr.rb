@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Williams %R (WR)
+    # Williams %R (WR).
+    # WR is a momentum indicator that measures overbought and oversold levels.
     class WR
+      # Calculates the Williams %R.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The WR period (default: 14).
+      # @return [Array<Float, nil>] The calculated Williams %R values.
       def self.calculate(data, period: 14)
         output = []
         

@@ -1,12 +1,15 @@
 module IndicatorHub
   module Indicators
+    # Wilder's Smoothing.
+    # Wilder's Smoothing is a type of exponential moving average used in 
+    # technical indicators like RSI and ATR.
     class WildersSmoothing
       include CalculationHelpers
 
-      # Wilders Smoothing
-      # @param prices [Array] Array of prices
-      # @param period [Integer] The period for the smoothing
-      # @return [Array<Float, nil>] An array of Wilders Smoothing values
+      # Calculates Wilder's Smoothing.
+      # @param prices [Array<Numeric>] Array of prices.
+      # @param period [Integer] The smoothing period (default: 14).
+      # @return [Array<Float, nil>] The calculated Wilder's Smoothing values.
       def self.calculate(prices, period: 14)
         return Array.new(prices.length, nil) if prices.length < period
 

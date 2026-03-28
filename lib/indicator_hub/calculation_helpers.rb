@@ -112,6 +112,7 @@ module IndicatorHub
 
   # Helper module for validating input data and formats.
   module Validation
+    # Error raised when data validation fails.
     class Error < StandardError; end
 
     # Validates that all elements in the data array are numeric.

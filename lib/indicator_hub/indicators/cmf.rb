@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Chaikin Money Flow (CMF)
+    # Chaikin Money Flow (CMF).
+    # CMF measures the amount of Money Flow Volume over a specific period.
     class CMF
+      # Calculates the Chaikin Money Flow.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The period for CMF (default: 20).
+      # @return [Array<Float, nil>] The calculated CMF values.
       def self.calculate(data, period: 20)
         period = period.to_i
         return Array.new(data.size, nil) if data.size < period

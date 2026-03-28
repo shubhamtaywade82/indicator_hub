@@ -4,9 +4,15 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Volume Oscillator
-    # Formula: ((Short SMA - Long SMA) / Long SMA) * 100
+    # Volume Oscillator.
+    # Volume Oscillator measures the difference between a fast and slow volume 
+    # moving average.
     class VolumeOscillator
+      # Calculates the Volume Oscillator.
+      # @param data [Array<Numeric, Hash>] Array of volumes or OHLCV hashes.
+      # @param short_period [Integer] Short SMA period (default: 20).
+      # @param long_period [Integer] Long SMA period (default: 60).
+      # @return [Array<Float, nil>] The calculated Volume Oscillator values.
       def self.calculate(data, short_period: 20, long_period: 60)
         # Handle OHLC data by extracting volume
         numeric_data = if data.is_a?(Array) && data.first.is_a?(Hash)

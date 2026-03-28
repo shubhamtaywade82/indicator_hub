@@ -4,8 +4,16 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Ichimoku Kinko Hyo
+    # Ichimoku Cloud.
+    # The Ichimoku Cloud is a collection of technical indicators that show 
+    # support and resistance levels, as well as momentum and trend direction.
     class Ichimoku
+      # Calculates the Ichimoku Cloud components.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param low_period [Integer] Tenkan-sen period (default: 9).
+      # @param medium_period [Integer] Kijun-sen period (default: 26).
+      # @param high_period [Integer] Senkou Span B period (default: 52).
+      # @return [Array<Hash, nil>] The calculated Ichimoku components.
       def self.calculate(data, low_period: 9, medium_period: 26, high_period: 52)
         # Expects array of hashes with :high, :low, :close
         output = []

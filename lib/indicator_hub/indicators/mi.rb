@@ -4,8 +4,15 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Mass Index (MI)
+    # Mass Index (MI).
+    # MI is a technical indicator used to predict trend reversals by analyzing 
+    # the narrowing and widening of the trading range.
     class MI
+      # Calculates the Mass Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param ema_period [Integer] The EMA period (default: 9).
+      # @param period [Integer] The summation period (default: 25).
+      # @return [Array<Float, nil>] The calculated MI values.
       def self.calculate(data, ema_period: 9, period: 25)
         high_low_diffs = data.map do |v|
           if v.is_a?(Hash)

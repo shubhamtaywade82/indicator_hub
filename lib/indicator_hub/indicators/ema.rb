@@ -4,8 +4,14 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Exponential Moving Average (EMA)
+    # Exponential Moving Average (EMA).
+    # EMA is a type of moving average that places a greater weight and significance 
+    # on the most recent data points.
     class EMA
+      # Calculates the Exponential Moving Average.
+      # @param data [Array<Numeric>] The input data points.
+      # @param period [Integer] The EMA period (default: 20).
+      # @return [Array<Float, nil>] The calculated EMA values.
       def self.calculate(data, period: 20)
         period = period.to_i
         Validation.validate_numeric_data(data)

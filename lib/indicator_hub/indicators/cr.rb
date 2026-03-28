@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Cumulative Return (CR)
+    # Cumulative Return (CR).
+    # CR is a measure of the total return on an investment over a set period of time.
     class CR
+      # Calculates the Cumulative Return.
+      # @param data [Array<Numeric>] The input data points.
+      # @param period [Integer] The period (default: 1).
+      # @return [Array<Float>] The calculated CR values.
       def self.calculate(data, period: 1)
         return [] if data.empty?
         

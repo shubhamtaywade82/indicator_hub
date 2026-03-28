@@ -5,8 +5,14 @@ require_relative "ema"
 
 module IndicatorHub
   module Indicators
-    # Triple Exponential Average (TRIX)
+    # Triple Exponential Average (TRIX).
+    # TRIX is a momentum oscillator that shows the percent rate-of-change of a 
+    # triple exponentially smoothed moving average.
     class TRIX
+      # Calculates the Triple Exponential Average.
+      # @param data [Array<Numeric>] The input data points.
+      # @param period [Integer] The TRIX period (default: 15).
+      # @return [Array<Float, nil>] The calculated TRIX values.
       def self.calculate(data, period: 15)
         period = period.to_i
         

@@ -4,8 +4,14 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Ease of Movement (EOM)
+    # Ease of Movement (EOM).
+    # EOM is a momentum oscillator that emphasizes the relationship between 
+    # price change and volume.
     class EOM
+      # Calculates the Ease of Movement.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The EOM period (default: 14).
+      # @return [Array<Float, nil>] The calculated EOM values.
       def self.calculate(data, period: 14)
         output = []
         emv_values = []

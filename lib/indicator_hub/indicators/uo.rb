@@ -4,8 +4,19 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Ultimate Oscillator (UO)
+    # Ultimate Oscillator (UO).
+    # UO is a technical indicator that combines price action over three 
+    # different timeframes into a single momentum oscillator.
     class UO
+      # Calculates the Ultimate Oscillator.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param short_period [Integer] Short period (default: 7).
+      # @param medium_period [Integer] Medium period (default: 14).
+      # @param long_period [Integer] Long period (default: 28).
+      # @param short_weight [Float] Short period weight (default: 4.0).
+      # @param medium_weight [Float] Medium period weight (default: 2.0).
+      # @param long_weight [Float] Long period weight (default: 1.0).
+      # @return [Array<Float, nil>] The calculated UO values.
       def self.calculate(data, short_period: 7, medium_period: 14, long_period: 28, 
                        short_weight: 4.0, medium_weight: 2.0, long_weight: 1.0)
         short_period = short_period.to_i

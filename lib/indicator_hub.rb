@@ -50,7 +50,9 @@ require_relative "indicator_hub/indicators/wilders_smoothing"
 require_relative "indicator_hub/indicators/wma"
 require_relative "indicator_hub/indicators/wr"
 
+# Base module for IndicatorHub technical analysis library.
 module IndicatorHub
+  # Generic error class for all IndicatorHub errors.
   class Error < StandardError; end
 
   # Main API for technical analysis indicators
@@ -261,10 +263,11 @@ module IndicatorHub
   # Calculates the CR Indicator.
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @param period [Integer] The CR period.
+  # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated CR values.
-  def self.cr(data, period: 20)
+  def self.cr(data, period: 20, field: :close)
     series = Series.new(data)
-    Indicators::CR.calculate(series.to_ohlc, period: period)
+    Indicators::CR.calculate(series.to_a(field: field), period: period)
   end
 
   # Calculates the Donchian Channel (DC).
@@ -280,10 +283,11 @@ module IndicatorHub
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @param period [Integer] The EMA period.
   # @param percentage [Numeric] The envelope percentage.
+  # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated envelope values.
-  def self.envelopes_ema(data, period: 20, percentage: 2.5)
+  def self.envelopes_ema(data, period: 20, percentage: 2.5, field: :close)
     series = Series.new(data)
-    Indicators::EnvelopesEMA.calculate(series.to_ohlc, 
+    Indicators::EnvelopesEMA.calculate(series.to_a(field: field), 
                                        period: period, 
                                        percentage: percentage)
   end

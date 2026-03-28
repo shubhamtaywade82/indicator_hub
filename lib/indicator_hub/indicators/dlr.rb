@@ -2,8 +2,12 @@
 
 module IndicatorHub
   module Indicators
-    # Daily Log Return (DLR)
+    # Daily Log Return (DLR).
+    # DLR is the logarithmic return of a security's price from one day to the next.
     class DLR
+      # Calculates the Daily Log Return.
+      # @param data [Array<Numeric>] The input data points.
+      # @return [Array<Float, nil>] The calculated DLR values.
       def self.calculate(data)
         output = []
         prev_price = nil

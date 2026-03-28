@@ -5,8 +5,22 @@ require_relative "sma"
 
 module IndicatorHub
   module Indicators
-    # Know Sure Thing (KST)
+    # Know Sure Thing (KST).
+    # KST is a momentum oscillator based on the smoothed rate-of-change of four 
+    # different timeframes.
     class KST
+      # Calculates the Know Sure Thing.
+      # @param data [Array<Numeric, Hash>] Array of prices or OHLCV hashes.
+      # @param r1 [Integer] ROC period 1 (default: 10).
+      # @param r2 [Integer] ROC period 2 (default: 15).
+      # @param r3 [Integer] ROC period 3 (default: 20).
+      # @param r4 [Integer] ROC period 4 (default: 30).
+      # @param s1 [Integer] SMA period 1 (default: 10).
+      # @param s2 [Integer] SMA period 2 (default: 10).
+      # @param s3 [Integer] SMA period 3 (default: 10).
+      # @param s4 [Integer] SMA period 4 (default: 15).
+      # @param signal [Integer] Signal line period (default: 9).
+      # @return [Array<Hash>] The calculated KST values { kst: Float, signal: Float }.
       def self.calculate(data, r1: 10, r2: 15, r3: 20, r4: 30, s1: 10, s2: 10, s3: 10, s4: 15, signal: 9)
         # Use close prices for KST
         closes = data.map do |v|

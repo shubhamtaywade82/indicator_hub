@@ -4,8 +4,13 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Volume Weighted Average Price (VWAP)
+    # Volume Weighted Average Price (VWAP).
+    # VWAP is a technical analysis indicator used on intraday charts that resets 
+    # at the start of every new trading session.
     class VWAP
+      # Calculates the Volume Weighted Average Price.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @return [Array<Float, nil>] The calculated VWAP values.
       def self.calculate(data)
         # Expects array of hashes with :high, :low, :close, :volume
         output = []

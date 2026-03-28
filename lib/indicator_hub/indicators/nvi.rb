@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Negative Volume Index (NVI)
+    # Negative Volume Index (NVI).
+    # NVI is a technical indicator used to identify market trends based on 
+    # days when volume decreases.
     class NVI
+      # Calculates the Negative Volume Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @return [Array<Float>] The calculated NVI values.
       def self.calculate(data)
         nvi_cumulative = 1_000.00
         output = []

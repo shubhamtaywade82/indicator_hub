@@ -4,8 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Intraday Momentum Index (IMI)
+    # Intraday Momentum Index (IMI).
+    # IMI is a technical indicator that combines candlestick analysis with 
+    # the Relative Strength Index (RSI).
     class IMI
+      # Calculates the Intraday Momentum Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The IMI period (default: 14).
+      # @return [Array<Float, nil>] The calculated IMI values.
       def self.calculate(data, period: 14)
         output = []
         

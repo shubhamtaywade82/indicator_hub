@@ -4,8 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Money Flow Index (MFI)
+    # Money Flow Index (MFI).
+    # MFI is a technical oscillator that uses price and volume for identifying 
+    # overbought or oversold signals in an asset.
     class MFI
+      # Calculates the Money Flow Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The MFI period (default: 14).
+      # @return [Array<Float, nil>] The calculated MFI values.
       def self.calculate(data, period: 14)
         return Array.new(data.size, nil) if data.size <= period
 

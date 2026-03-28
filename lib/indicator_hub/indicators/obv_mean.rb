@@ -4,8 +4,13 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # On-balance Volume Mean (OBV_MEAN)
+    # On-Balance Volume Mean (OBV Mean).
+    # OBV Mean is the average of the On-Balance Volume over a specified period.
     class OBVMean
+      # Calculates the On-Balance Volume Mean.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The OBV Mean period (default: 10).
+      # @return [Array<Float, nil>] The calculated OBV Mean values.
       def self.calculate(data, period: 10)
         current_obv = 0.0
         obvs = []

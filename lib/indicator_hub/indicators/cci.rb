@@ -4,8 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Commodity Channel Index (CCI)
+    # Commodity Channel Index (CCI).
+    # CCI measures the current price level relative to an average price level over a given period of time.
     class CCI
+      # Calculates the Commodity Channel Index.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The period for CCI (default: 20).
+      # @param constant [Float] The constant used for scaling (default: 0.015).
+      # @return [Array<Float, nil>] The calculated CCI values.
       def self.calculate(data, period: 20, constant: 0.015)
         tp_values = data.map { |v| (v[:high] + v[:low] + v[:close]) / 3.0 }
         output = []

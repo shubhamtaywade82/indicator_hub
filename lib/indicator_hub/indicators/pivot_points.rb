@@ -1,11 +1,13 @@
 module IndicatorHub
   module Indicators
+    # Pivot Points.
+    # Pivot Points are used to identify potential support and resistance levels.
     class PivotPoints
       include CalculationHelpers
 
-      # Pivot Points
-      # @param data [Array<Hash>] OHLC data
-      # @return [Array<Hash>] An array of hashes containing the pivot point, supports, and resistances
+      # Calculates the Pivot Points.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @return [Array<Hash>] The calculated Pivot Points values { p: Float, s1: Float, s2: Float, s3: Float, r1: Float, r2: Float, r3: Float }.
       def self.calculate(data)
         return [] unless data.is_a?(Array) && !data.empty?
 

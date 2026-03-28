@@ -4,8 +4,16 @@ require_relative 'ema'
 
 module IndicatorHub
   module Indicators
-    # Moving Average Convergence Divergence (MACD)
+    # Moving Average Convergence Divergence (MACD).
+    # MACD is a trend-following momentum indicator that shows the relationship 
+    # between two moving averages of a security’s price.
     class MACD
+      # Calculates the Moving Average Convergence Divergence.
+      # @param data [Array<Numeric>] The input data points.
+      # @param fast_period [Integer] The fast EMA period (default: 12).
+      # @param slow_period [Integer] The slow EMA period (default: 26).
+      # @param signal_period [Integer] The signal EMA period (default: 9).
+      # @return [Array<Hash, nil>] The calculated MACD components (macd, signal, histogram).
       def self.calculate(data, fast_period: 12, slow_period: 26, signal_period: 9)
         fast_ema = EMA.calculate(data, period: fast_period)
         slow_ema = EMA.calculate(data, period: slow_period)

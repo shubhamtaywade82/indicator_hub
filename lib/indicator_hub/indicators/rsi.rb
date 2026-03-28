@@ -4,8 +4,15 @@ require_relative '../calculation_helpers'
 
 module IndicatorHub
   module Indicators
-    # Relative Strength Index (RSI)
+    # Relative Strength Index (RSI).
+    # RSI is a momentum oscillator that measures the speed and change of price movements.
+    # It oscillates between 0 and 100. Traditionally, RSI is considered overbought when 
+    # above 70 and oversold when below 30.
     class RSI
+      # Calculates the Relative Strength Index.
+      # @param data [Array<Numeric>] The input data points.
+      # @param period [Integer] The RSI period (default: 14).
+      # @return [Array<Float, nil>] The calculated RSI values.
       def self.calculate(data, period: 14)
         return [] if data.size < period
 

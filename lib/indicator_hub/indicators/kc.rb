@@ -4,8 +4,14 @@ require_relative "../calculation_helpers"
 
 module IndicatorHub
   module Indicators
-    # Keltner Channel (KC)
+    # Keltner Channel (KC).
+    # KC is a volatility-based technical indicator composed of three separate lines.
     class KC
+      # Calculates the Keltner Channel.
+      # @param data [Array<Hash>] Array of OHLCV hashes.
+      # @param period [Integer] The KC period (default: 20).
+      # @param multiplier [Float] The ATR multiplier (default: 1.5).
+      # @return [Array<Hash, nil>] The calculated KC values { upper: Float, middle: Float, lower: Float }.
       def self.calculate(data, period: 20, multiplier: 1.5)
         output = []
         typical_prices = []
