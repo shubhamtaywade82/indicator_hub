@@ -27,12 +27,15 @@ module IndicatorHub
     # @return [Array<Float>] An array of floating point numbers extracted from the data
     sig { params(field: T.any(Symbol, String)).returns(T::Array[Float]) }
     def to_a(field: :close)
-      return T.cast(data, T::Array[Float]) if data.all? { |v| v.is_a?(Numeric) }
-      
-      data.map do |v| 
-        next 0.0 unless v.is_a?(Hash)
-        (v[field] || v[field.to_sym] || v[field.to_s]).to_f 
-      end.compact
+      data.map do |v|
+        if v.is_a?(Numeric)
+          v.to_f
+        elsif v.is_a?(Hash)
+          (v[field] || v[field.to_sym] || v[field.to_s] || 0.0).to_f
+        else
+          0.0
+        end
+      end
     end
 
     # Normalizes input data into an array of OHLCV hashes.
@@ -41,14 +44,25 @@ module IndicatorHub
     sig { returns(T::Array[T::Hash[Symbol, Float]]) }
     def to_ohlc
       data.map do |v|
-        next { open: 0.0, high: 0.0, low: 0.0, close: 0.0, volume: 0.0 } unless v.is_a?(Hash)
-        {
-          open: (v[:open] || v["open"]).to_f,
-          high: (v[:high] || v["high"]).to_f,
-          low: (v[:low] || v["low"]).to_f,
-          close: (v[:close] || v["close"]).to_f,
-          volume: (v[:volume] || v["volume"]).to_f
-        }
+        if v.is_a?(Hash)
+          {
+            open: (v[:open] || v["open"] || 0.0).to_f,
+            high: (v[:high] || v["high"] || 0.0).to_f,
+            low: (v[:low] || v["low"] || 0.0).to_f,
+            close: (v[:close] || v["close"] || 0.0).to_f,
+            volume: (v[:volume] || v["volume"] || 0.0).to_f
+          }
+        elsif v.is_a?(Numeric)
+          {
+            open: v.to_f,
+            high: v.to_f,
+            low: v.to_f,
+            close: v.to_f,
+            volume: 0.0
+          }
+        else
+          { open: 0.0, high: 0.0, low: 0.0, close: 0.0, volume: 0.0 }
+        end
       end
     end
 

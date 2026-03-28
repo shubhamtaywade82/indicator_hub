@@ -1,35 +1,31 @@
 # frozen_string_literal: true
 
-require_relative '../calculation_helpers'
+require_relative 'base_indicator'
 
 module IndicatorHub
   module Indicators
     # Simple Moving Average (SMA).
     # SMA is a basic technical indicator that calculates the average price over a 
     # specified number of periods.
-    class SMA
+    class SMA < BaseIndicator
       # Calculates the Simple Moving Average.
-      # @param data [Array<Numeric>] The input data points.
-      # @param period [Integer] The SMA period (default: 20).
       # @return [Array<Float, nil>] The calculated SMA values.
-      def self.calculate(data, period: 20)
-        period = period.to_i
-        Validation.validate_numeric_data(data)
-        return Array.new(data.size, nil) if data.size < period
+      def calculate
+        period = options[:period] || 20
+        CalculationHelpers.sma(numeric_data, period)
+      end
 
-        output = []
-        period_values = []
+      # Defines the list of valid option keys for this indicator.
+      # @return [Array<Symbol>]
+      def self.valid_options
+        [:field, :period]
+      end
 
-        data.each do |v|
-          period_values << v
-          if period_values.size == period
-            output << CalculationHelpers.average(period_values)
-            period_values.shift
-          else
-            output << nil
-          end
-        end
-        output
+      # Defines the minimum number of data points required for calculation.
+      # @param options [Hash] The current indicator options.
+      # @return [Integer]
+      def self.min_data_size(options)
+        options[:period] || 20
       end
     end
   end

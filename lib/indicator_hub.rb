@@ -56,17 +56,16 @@ module IndicatorHub
   class Error < StandardError; end
 
   # Main API for technical analysis indicators
-  
+
   # Group 1: Single Series Indicators (Usually :close)
-  
+
   # Calculates the Simple Moving Average (SMA).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @param period [Integer] The SMA period.
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated SMA values.
   def self.sma(data, period: 20, field: :close)
-    series = Series.new(data)
-    Indicators::SMA.calculate(series.to_a(field: field), period: period)
+    Indicators::SMA.new(data, period: period, field: field).calculate
   end
 
   # Calculates the Exponential Moving Average (EMA).
@@ -75,8 +74,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated EMA values.
   def self.ema(data, period: 20, field: :close)
-    series = Series.new(data)
-    Indicators::EMA.calculate(series.to_a(field: field), period: period)
+    Indicators::EMA.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Weighted Moving Average (WMA).
@@ -85,8 +83,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated WMA values.
   def self.wma(data, period: 20, field: :close)
-    series = Series.new(data)
-    Indicators::WMA.calculate(series.to_a(field: field), period: period)
+    Indicators::WMA.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Relative Strength Index (RSI).
@@ -95,8 +92,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated RSI values.
   def self.rsi(data, period: 14, field: :close)
-    series = Series.new(data)
-    Indicators::RSI.calculate(series.to_a(field: field), period: period)
+    Indicators::RSI.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Chande Momentum Oscillator (CMO).
@@ -105,8 +101,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated CMO values.
   def self.cmo(data, period: 14, field: :close)
-    series = Series.new(data)
-    Indicators::CMO.calculate(series.to_a(field: field), period: period)
+    Indicators::CMO.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Daily Log Return (DLR).
@@ -114,8 +109,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated DLR values.
   def self.dlr(data, field: :close)
-    series = Series.new(data)
-    Indicators::DLR.calculate(series.to_a(field: field))
+    Indicators::DLR.calculate(normalize_series(data, field))
   end
 
   # Calculates the Detrended Price Oscillator (DPO).
@@ -124,8 +118,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated DPO values.
   def self.dpo(data, period: 20, field: :close)
-    series = Series.new(data)
-    Indicators::DPO.calculate(series.to_a(field: field), period: period)
+    Indicators::DPO.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Daily Return (DR).
@@ -133,8 +126,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated DR values.
   def self.dr(data, field: :close)
-    series = Series.new(data)
-    Indicators::DR.calculate(series.to_a(field: field))
+    Indicators::DR.calculate(normalize_series(data, field))
   end
 
   # Calculates the Rate of Change (ROC).
@@ -143,8 +135,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated ROC values.
   def self.roc(data, period: 12, field: :close)
-    series = Series.new(data)
-    Indicators::ROC.calculate(series.to_a(field: field), period: period)
+    Indicators::ROC.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the TRIX (Triple Exponential Average).
@@ -153,8 +144,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated TRIX values.
   def self.trix(data, period: 15, field: :close)
-    series = Series.new(data)
-    Indicators::TRIX.calculate(series.to_a(field: field), period: period)
+    Indicators::TRIX.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the True Strength Index (TSI).
@@ -164,10 +154,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated TSI values.
   def self.tsi(data, fast_period: 13, slow_period: 25, field: :close)
-    series = Series.new(data)
-    Indicators::TSI.calculate(series.to_a(field: field), 
-                              fast_period: fast_period, 
-                              slow_period: slow_period)
+    Indicators::TSI.calculate(normalize_series(data, field), fast_period: fast_period, slow_period: slow_period)
   end
 
   # Calculates Wilder's Smoothing.
@@ -176,8 +163,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated values.
   def self.wilders_smoothing(data, period: 14, field: :close)
-    series = Series.new(data)
-    Indicators::WildersSmoothing.calculate(series.to_a(field: field), period: period)
+    Indicators::WildersSmoothing.calculate(normalize_series(data, field), period: period)
   end
 
   # Group 2: OHLCV Indicators
@@ -186,8 +172,7 @@ module IndicatorHub
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated ADI values.
   def self.adi(data)
-    series = Series.new(data)
-    Indicators::ADI.calculate(series.to_ohlc)
+    Indicators::ADI.calculate(normalize_ohlcv(data))
   end
 
   # Calculates the Average Daily Trading Volume (ADTV).
@@ -195,8 +180,7 @@ module IndicatorHub
   # @param period [Integer] The ADTV period.
   # @return [Array<Float, nil>] The calculated ADTV values.
   def self.adtv(data, period: 20)
-    series = Series.new(data)
-    Indicators::ADTV.calculate(series.to_ohlc, period: period)
+    Indicators::ADTV.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Average Directional Index (ADX).
@@ -204,8 +188,7 @@ module IndicatorHub
   # @param period [Integer] The ADX period.
   # @return [Array<Float, nil>] The calculated ADX values.
   def self.adx(data, period: 14)
-    series = Series.new(data)
-    Indicators::ADX.calculate(series.to_ohlc, period: period)
+    Indicators::ADX.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Awesome Oscillator (AO).
@@ -214,10 +197,7 @@ module IndicatorHub
   # @param long_period [Integer] The long AO period.
   # @return [Array<Float, nil>] The calculated AO values.
   def self.ao(data, short_period: 5, long_period: 34)
-    series = Series.new(data)
-    Indicators::AO.calculate(series.to_ohlc, 
-                             short_period: short_period, 
-                             long_period: long_period)
+    Indicators::AO.calculate(normalize_ohlcv(data), short_period: short_period, long_period: long_period)
   end
 
   # Calculates the Average True Range (ATR).
@@ -225,8 +205,7 @@ module IndicatorHub
   # @param period [Integer] The ATR period.
   # @return [Array<Float, nil>] The calculated ATR values.
   def self.atr(data, period: 14)
-    series = Series.new(data)
-    Indicators::ATR.calculate(series.to_ohlc, period: period)
+    Indicators::ATR.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates Bollinger Bands (BB).
@@ -236,10 +215,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated BB values.
   def self.bb(data, period: 20, standard_deviations: 2, field: :close)
-    series = Series.new(data)
-    Indicators::BB.calculate(series.to_a(field: field), 
-                             period: period, 
-                             standard_deviations: standard_deviations)
+    Indicators::BB.calculate(normalize_series(data, field), period: period, standard_deviations: standard_deviations)
   end
 
   # Calculates the Commodity Channel Index (CCI).
@@ -247,8 +223,7 @@ module IndicatorHub
   # @param period [Integer] The CCI period.
   # @return [Array<Float, nil>] The calculated CCI values.
   def self.cci(data, period: 20)
-    series = Series.new(data)
-    Indicators::CCI.calculate(series.to_ohlc, period: period)
+    Indicators::CCI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Chaikin Money Flow (CMF).
@@ -256,8 +231,7 @@ module IndicatorHub
   # @param period [Integer] The CMF period.
   # @return [Array<Float, nil>] The calculated CMF values.
   def self.cmf(data, period: 20)
-    series = Series.new(data)
-    Indicators::CMF.calculate(series.to_ohlc, period: period)
+    Indicators::CMF.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the CR Indicator.
@@ -266,8 +240,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated CR values.
   def self.cr(data, period: 20, field: :close)
-    series = Series.new(data)
-    Indicators::CR.calculate(series.to_a(field: field), period: period)
+    Indicators::CR.calculate(normalize_series(data, field), period: period)
   end
 
   # Calculates the Donchian Channel (DC).
@@ -275,8 +248,7 @@ module IndicatorHub
   # @param period [Integer] The DC period.
   # @return [Array<Float, nil>] The calculated DC values.
   def self.dc(data, period: 20)
-    series = Series.new(data)
-    Indicators::DC.calculate(series.to_ohlc, period: period)
+    Indicators::DC.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates Envelopes using EMA.
@@ -286,10 +258,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated envelope values.
   def self.envelopes_ema(data, period: 20, percentage: 2.5, field: :close)
-    series = Series.new(data)
-    Indicators::EnvelopesEMA.calculate(series.to_a(field: field), 
-                                       period: period, 
-                                       percentage: percentage)
+    Indicators::EnvelopesEMA.calculate(normalize_series(data, field), period: period, percentage: percentage)
   end
 
   # Calculates Ease of Movement (EOM).
@@ -297,8 +266,7 @@ module IndicatorHub
   # @param period [Integer] The EOM period.
   # @return [Array<Float, nil>] The calculated EOM values.
   def self.eom(data, period: 14)
-    series = Series.new(data)
-    Indicators::EOM.calculate(series.to_ohlc, period: period)
+    Indicators::EOM.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Force Index (FI).
@@ -306,8 +274,7 @@ module IndicatorHub
   # @param period [Integer] The FI period.
   # @return [Array<Float, nil>] The calculated FI values.
   def self.fi(data, period: 13)
-    series = Series.new(data)
-    Indicators::FI.calculate(series.to_ohlc, period: period)
+    Indicators::FI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Ichimoku Cloud.
@@ -317,11 +284,7 @@ module IndicatorHub
   # @param high_period [Integer] The high period.
   # @return [Array<Float, nil>] The calculated Ichimoku values.
   def self.ichimoku(data, low_period: 9, medium_period: 26, high_period: 52)
-    series = Series.new(data)
-    Indicators::Ichimoku.calculate(series.to_ohlc, 
-                                   low_period: low_period, 
-                                   medium_period: medium_period, 
-                                   high_period: high_period)
+    Indicators::Ichimoku.calculate(normalize_ohlcv(data), low_period: low_period, medium_period: medium_period, high_period: high_period)
   end
 
   # Calculates the Intraday Momentum Index (IMI).
@@ -329,8 +292,7 @@ module IndicatorHub
   # @param period [Integer] The IMI period.
   # @return [Array<Float, nil>] The calculated IMI values.
   def self.imi(data, period: 14)
-    series = Series.new(data)
-    Indicators::IMI.calculate(series.to_ohlc, period: period)
+    Indicators::IMI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates Keltner Channels (KC).
@@ -339,10 +301,7 @@ module IndicatorHub
   # @param multiplier [Numeric] The multiplier for the channel width.
   # @return [Array<Float, nil>] The calculated KC values.
   def self.kc(data, period: 20, multiplier: 1.5)
-    series = Series.new(data)
-    Indicators::KC.calculate(series.to_ohlc, 
-                             period: period, 
-                             multiplier: multiplier)
+    Indicators::KC.calculate(normalize_ohlcv(data), period: period, multiplier: multiplier)
   end
 
   # Calculates the Know Sure Thing (KST) oscillator.
@@ -358,11 +317,7 @@ module IndicatorHub
   # @param signal [Integer] Signal line period.
   # @return [Array<Float, nil>] The calculated KST values.
   def self.kst(data, r1: 10, r2: 15, r3: 20, r4: 30, s1: 10, s2: 10, s3: 10, s4: 15, signal: 9)
-    series = Series.new(data)
-    Indicators::KST.calculate(series.to_ohlc, 
-                              r1: r1, r2: r2, r3: r3, r4: r4, 
-                              s1: s1, s2: s2, s3: s3, s4: s4, 
-                              signal: signal)
+    Indicators::KST.calculate(normalize_series(data, :close), r1: r1, r2: r2, r3: r3, r4: r4, s1: s1, s2: s2, s3: s3, s4: s4, signal: signal)
   end
 
   # Calculates the Moving Average Convergence Divergence (MACD).
@@ -373,11 +328,7 @@ module IndicatorHub
   # @param field [Symbol] The field to use if data is an array of hashes.
   # @return [Array<Float, nil>] The calculated MACD values.
   def self.macd(data, fast_period: 12, slow_period: 26, signal_period: 9, field: :close)
-    series = Series.new(data)
-    Indicators::MACD.calculate(series.to_a(field: field), 
-                               fast_period: fast_period, 
-                               slow_period: slow_period, 
-                               signal_period: signal_period)
+    Indicators::MACD.calculate(normalize_series(data, field), fast_period: fast_period, slow_period: slow_period, signal_period: signal_period)
   end
 
   # Calculates the Money Flow Index (MFI).
@@ -385,8 +336,7 @@ module IndicatorHub
   # @param period [Integer] The MFI period.
   # @return [Array<Float, nil>] The calculated MFI values.
   def self.mfi(data, period: 14)
-    series = Series.new(data)
-    Indicators::MFI.calculate(series.to_ohlc, period: period)
+    Indicators::MFI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Mass Index (MI).
@@ -394,24 +344,21 @@ module IndicatorHub
   # @param period [Integer] The MI period.
   # @return [Array<Float, nil>] The calculated MI values.
   def self.mi(data, period: 25)
-    series = Series.new(data)
-    Indicators::MI.calculate(series.to_ohlc, period: period)
+    Indicators::MI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Negative Volume Index (NVI).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated NVI values.
   def self.nvi(data)
-    series = Series.new(data)
-    Indicators::NVI.calculate(series.to_ohlc)
+    Indicators::NVI.calculate(normalize_ohlcv(data))
   end
 
   # Calculates the On-Balance Volume (OBV).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated OBV values.
   def self.obv(data)
-    series = Series.new(data)
-    Indicators::OBV.calculate(series.to_ohlc)
+    Indicators::OBV.calculate(normalize_ohlcv(data))
   end
 
   # Calculates the Mean of On-Balance Volume (OBV Mean).
@@ -419,16 +366,14 @@ module IndicatorHub
   # @param period [Integer] The OBV Mean period.
   # @return [Array<Float, nil>] The calculated OBV Mean values.
   def self.obv_mean(data, period: 10)
-    series = Series.new(data)
-    Indicators::OBVMean.calculate(series.to_ohlc, period: period)
+    Indicators::OBVMean.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates Pivot Points.
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated pivot points.
   def self.pivot_points(data)
-    series = Series.new(data)
-    Indicators::PivotPoints.calculate(series.to_ohlc)
+    Indicators::PivotPoints.calculate(normalize_ohlcv(data))
   end
 
   # Calculates the Price Channel.
@@ -436,8 +381,7 @@ module IndicatorHub
   # @param period [Integer] The price channel period.
   # @return [Array<Float, nil>] The calculated price channel values.
   def self.price_channel(data, period: 20)
-    series = Series.new(data)
-    Indicators::PriceChannel.calculate(series.to_ohlc, period: period)
+    Indicators::PriceChannel.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the QStick indicator.
@@ -445,8 +389,7 @@ module IndicatorHub
   # @param period [Integer] The QStick period.
   # @return [Array<Float, nil>] The calculated QStick values.
   def self.qstick(data, period: 10)
-    series = Series.new(data)
-    Indicators::QStick.calculate(series.to_ohlc, period: period)
+    Indicators::QStick.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Range Momentum Index (RMI).
@@ -455,10 +398,7 @@ module IndicatorHub
   # @param momentum_period [Integer] The momentum period.
   # @return [Array<Float, nil>] The calculated RMI values.
   def self.rmi(data, period: 14, momentum_period: 5)
-    series = Series.new(data)
-    Indicators::RMI.calculate(series.to_ohlc, 
-                              period: period, 
-                              momentum_period: momentum_period)
+    Indicators::RMI.calculate(normalize_series(data, :close), period: period, momentum_period: momentum_period)
   end
 
   # Calculates the Stochastic Oscillator (SO).
@@ -467,10 +407,7 @@ module IndicatorHub
   # @param d_period [Integer] The %D period.
   # @return [Array<Float, nil>] The calculated SO values.
   def self.so(data, k_period: 14, d_period: 3)
-    series = Series.new(data)
-    Indicators::SO.calculate(series.to_ohlc, 
-                             k_period: k_period, 
-                             d_period: d_period)
+    Indicators::SO.calculate(normalize_ohlcv(data), k_period: k_period, d_period: d_period)
   end
 
   # Calculates the Ultimate Oscillator (UO).
@@ -480,11 +417,7 @@ module IndicatorHub
   # @param long_period [Integer] The long UO period.
   # @return [Array<Float, nil>] The calculated UO values.
   def self.uo(data, short_period: 7, medium_period: 14, long_period: 28)
-    series = Series.new(data)
-    Indicators::UO.calculate(series.to_ohlc, 
-                             short_period: short_period, 
-                             medium_period: medium_period, 
-                             long_period: long_period)
+    Indicators::UO.calculate(normalize_ohlcv(data), short_period: short_period, medium_period: medium_period, long_period: long_period)
   end
 
   # Calculates the Vortex Indicator (VI).
@@ -492,8 +425,7 @@ module IndicatorHub
   # @param period [Integer] The VI period.
   # @return [Array<Float, nil>] The calculated VI values.
   def self.vi(data, period: 14)
-    series = Series.new(data)
-    Indicators::VI.calculate(series.to_ohlc, period: period)
+    Indicators::VI.calculate(normalize_ohlcv(data), period: period)
   end
 
   # Calculates the Volume Oscillator.
@@ -502,26 +434,21 @@ module IndicatorHub
   # @param long_period [Integer] The long oscillator period.
   # @return [Array<Float, nil>] The calculated volume oscillator values.
   def self.volume_oscillator(data, short_period: 20, long_period: 60)
-    series = Series.new(data)
-    Indicators::VolumeOscillator.calculate(series.to_a(field: :volume), 
-                                           short_period: short_period, 
-                                           long_period: long_period)
+    Indicators::VolumeOscillator.calculate(normalize_ohlcv(data), short_period: short_period, long_period: long_period)
   end
 
   # Calculates the Volume Price Trend (VPT).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated VPT values.
   def self.vpt(data)
-    series = Series.new(data)
-    Indicators::VPT.calculate(series.to_ohlc)
+    Indicators::VPT.calculate(normalize_ohlcv(data))
   end
 
   # Calculates the Volume Weighted Average Price (VWAP).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @return [Array<Float, nil>] The calculated VWAP values.
   def self.vwap(data)
-    series = Series.new(data)
-    Indicators::VWAP.calculate(series.to_ohlc)
+    Indicators::VWAP.calculate(normalize_ohlcv(data))
   end
 
   # Calculates Williams %R (WR).
@@ -529,7 +456,25 @@ module IndicatorHub
   # @param period [Integer] The WR period.
   # @return [Array<Float, nil>] The calculated WR values.
   def self.wr(data, period: 14)
-    series = Series.new(data)
-    Indicators::WR.calculate(series.to_ohlc, period: period)
+    Indicators::WR.calculate(normalize_ohlcv(data), period: period)
   end
+
+  # ---- Private helpers ----
+
+  # Normalizes data to a numeric array using Series.
+  # @param data [Array] Raw input data.
+  # @param field [Symbol] The field to extract.
+  # @return [Array<Float>] Normalized numeric array.
+  def self.normalize_series(data, field = :close)
+    Series.new(data).to_a(field: field)
+  end
+  private_class_method :normalize_series
+
+  # Normalizes data to OHLCV hash array using Series.
+  # @param data [Array] Raw input data.
+  # @return [Array<Hash>] Normalized OHLCV array.
+  def self.normalize_ohlcv(data)
+    Series.new(data).to_ohlc
+  end
+  private_class_method :normalize_ohlcv
 end

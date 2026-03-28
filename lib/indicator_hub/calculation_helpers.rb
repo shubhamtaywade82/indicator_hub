@@ -189,46 +189,4 @@ module IndicatorHub
       output
     end
   end
-
-  # Helper module for validating input data and formats.
-  module Validation
-    extend T::Sig
-    # Error raised when data validation fails.
-    class Error < StandardError; end
-
-    # Validates that the provided options are within the allowed set.
-    # @param options [Hash] The options to validate.
-    # @param valid_options [Array<Symbol>] The list of allowed option keys.
-    # @raise [Validation::Error] if an invalid option is found.
-    sig { params(options: T::Hash[Symbol, T.untyped], valid_options: T::Array[Symbol]).void }
-    def self.validate_options(options, valid_options)
-      raise Error, "Options must be a hash." unless options.is_a?(Hash)
-      
-      invalid_keys = options.keys - valid_options
-      unless invalid_keys.empty?
-        raise Error, "Invalid options: #{invalid_keys.join(', ')}. Valid options are: #{valid_options.join(', ')}"
-      end
-    end
-
-    # Validates that all elements in the data array are numeric.
-    # @param data [Array] The data to validate.
-    # @raise [Validation::Error] if any element is not numeric.
-    sig { params(data: T::Array[T.untyped]).void }
-    def self.validate_numeric_data(data)
-      unless data.all? { |v| v.is_a?(Numeric) }
-        raise Error, "Invalid Data. Input must be numeric."
-      end
-    end
-
-    # Validates that the data has at least a certain length.
-    # @param data [Array] The data to validate.
-    # @param size [Integer] The minimum required size.
-    # @raise [Validation::Error] if data is too short.
-    sig { params(data: T::Array[T.untyped], size: Integer).void }
-    def self.validate_length(data, size)
-      if data.size < size
-        raise Error, "Not enough data for that period. Expected at least #{size}, got #{data.size}."
-      end
-    end
-  end
 end

@@ -49,7 +49,7 @@ module IndicatorHub
         # Calculate signal line (SMA of KST)
         valid_kst = kst_values.compact
         if valid_kst.size >= signal
-          signal_line_valid = SMA.calculate(valid_kst, period: signal)
+          signal_line_valid = CalculationHelpers.sma(valid_kst, signal)
           lead_nils_count = kst_values.count(nil)
           full_signal_line = Array.new(lead_nils_count, nil) + signal_line_valid
         else
