@@ -23,8 +23,8 @@ module IndicatorHub
           if i < period - 1
             results << { upper: nil, lower: nil }
           else
-            current_highs = highs[i - period + 1..i]
-            current_lows = lows[i - period + 1..i]
+            current_highs = highs[(i - period + 1)..i]
+            current_lows = lows[(i - period + 1)..i]
             results << {
               upper: current_highs.max,
               lower: current_lows.min

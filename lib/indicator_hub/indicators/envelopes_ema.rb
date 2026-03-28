@@ -23,8 +23,8 @@ module IndicatorHub
           if ema.nil?
             output << { upper: nil, middle: nil, lower: nil }
           else
-            upper = ema * (1 + percentage / 100.0)
-            lower = ema * (1 - percentage / 100.0)
+            upper = ema * (1 + (percentage / 100.0))
+            lower = ema * (1 - (percentage / 100.0))
             output << { upper: upper, middle: ema, lower: lower }
           end
         end

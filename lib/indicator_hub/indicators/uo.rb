@@ -44,7 +44,7 @@ module IndicatorHub
 
         # We need long_period elements in bp/tr to start
         # bp/tr have size data.size - 1
-        (long_period - 1...bp.size).each do |i|
+        ((long_period - 1)...bp.size).each do |i|
           avg7 = sum_last(bp, i, short_period) / sum_last(tr, i, short_period).to_f
           avg14 = sum_last(bp, i, medium_period) / sum_last(tr, i, medium_period).to_f
           avg28 = sum_last(bp, i, long_period) / sum_last(tr, i, long_period).to_f

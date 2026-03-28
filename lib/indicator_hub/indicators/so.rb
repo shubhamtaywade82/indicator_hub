@@ -24,8 +24,8 @@ module IndicatorHub
           if i < k_period - 1
             fast_ks << nil
           else
-            current_highs = highs[i - k_period + 1..i]
-            current_lows = lows[i - k_period + 1..i]
+            current_highs = highs[(i - k_period + 1)..i]
+            current_lows = lows[(i - k_period + 1)..i]
 
             hh = current_highs.max
             ll = current_lows.min
@@ -45,7 +45,7 @@ module IndicatorHub
             if i < (k_period - 1) + (k_slowing - 1)
               slow_ks << nil
             else
-              period_values = fast_ks[i - k_slowing + 1..i]
+              period_values = fast_ks[(i - k_slowing + 1)..i]
               slow_ks << (period_values.sum / k_slowing.to_f)
             end
           end
@@ -59,7 +59,7 @@ module IndicatorHub
           if i < (k_period - 1) + (k_slowing > 1 ? (k_slowing - 1) : 0) + (d_period - 1)
             ds << nil
           else
-            period_values = slow_ks[i - d_period + 1..i]
+            period_values = slow_ks[(i - d_period + 1)..i]
             ds << (period_values.sum / d_period.to_f)
           end
         end

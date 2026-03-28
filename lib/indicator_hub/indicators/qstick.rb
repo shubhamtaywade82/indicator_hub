@@ -25,7 +25,7 @@ module IndicatorHub
           if i < period - 1
             results << nil
           else
-            current_diffs = diffs[i - period + 1..i]
+            current_diffs = diffs[(i - period + 1)..i]
             results << (current_diffs.sum.to_f / period).round(4)
           end
         end

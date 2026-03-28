@@ -30,7 +30,7 @@ module IndicatorHub
     # @raise [Validation::Error] if non-numeric data is found.
     sig { params(data: T::Array[T.untyped]).void }
     def self.validate_numeric_data(data)
-      return if data.all? { |v| v.is_a?(Numeric) }
+      return if data.all?(Numeric)
 
       raise Error, "Invalid Data. Input must be numeric."
     end

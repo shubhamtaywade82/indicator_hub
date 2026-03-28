@@ -25,7 +25,7 @@ module IndicatorHub
         alpha = 1.0 / period
 
         prices.drop(period).each do |price|
-          wilders = (price - wilders) * alpha + wilders
+          wilders = ((price - wilders) * alpha) + wilders
           results << wilders.round(4)
         end
 

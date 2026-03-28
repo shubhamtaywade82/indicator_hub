@@ -14,7 +14,7 @@ module IndicatorHub
     # @return [Float] The sum of all elements.
     sig { params(data: T::Array[Numeric]).returns(Float) }
     def self.sum(data)
-      data.inject(0.0, :+)
+      data.sum(0.0)
     end
 
     # Calculates the arithmetic mean (average) of the data.
@@ -41,7 +41,7 @@ module IndicatorHub
       return 0.0 if data.size <= 1
 
       m = mean(data)
-      sum_sq_diff = data.inject(0.0) { |accum, i| accum + (i - m)**2 }
+      sum_sq_diff = data.inject(0.0) { |accum, i| accum + ((i - m)**2) }
       sum_sq_diff / (data.size - 1).to_f
     end
 
@@ -110,7 +110,7 @@ module IndicatorHub
       if prev_value.nil?
         average(data)
       else
-        (current_value.to_f - prev_value.to_f) * (2.0 / (period + 1.0)) + prev_value.to_f
+        ((current_value.to_f - prev_value.to_f) * (2.0 / (period + 1.0))) + prev_value.to_f
       end
     end
 

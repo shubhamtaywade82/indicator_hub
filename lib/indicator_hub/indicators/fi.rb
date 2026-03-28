@@ -30,7 +30,7 @@ module IndicatorHub
           if prev_close.nil?
             # First data point has no previous close to calculate force index
           else
-            raw_fi << (close - prev_close) * volume
+            raw_fi << ((close - prev_close) * volume)
           end
           prev_close = close
         end

@@ -70,7 +70,7 @@ module IndicatorHub
             adx = CalculationHelpers.average(dx_values[0..i])
             output << adx
           else
-            adx = (adx * (period - 1) + dx) / period.to_f
+            adx = ((adx * (period - 1)) + dx) / period.to_f
             output << adx
           end
         end

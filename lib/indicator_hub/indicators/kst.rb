@@ -67,12 +67,12 @@ module IndicatorHub
         return nil if index < (roc + sma)
 
         roc_data = []
-        (index - sma + 1..index).each do |i|
+        ((index - sma + 1)..index).each do |i|
           current_price = data[i]
           past_price = data[i - roc]
           return nil if past_price.nil? || past_price.zero?
 
-          roc_data << (current_price - past_price) / past_price.to_f * 100.0
+          roc_data << ((current_price - past_price) / past_price.to_f * 100.0)
         end
         CalculationHelpers.average(roc_data)
       end
