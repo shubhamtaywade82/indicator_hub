@@ -231,7 +231,7 @@ IndicatorHub.vwap(rows)
 
 ### Delta Exchange Response
 
-If your provider returns candles in a `result` array, you can pass that array directly after extracting it:
+The `delta_exchange` gem returns the parsed API response envelope from `/v2/history/candles`. In practice, you extract `result` and normalize `time` to `timestamp` if you want a consistent candle shape in your app:
 
 ```ruby
 payload = {
@@ -265,33 +265,34 @@ IndicatorHub.rsi(candles, period: 14, field: :close)
 
 ### DhanHQ Client Response
 
-If your provider returns parallel arrays, first zip them into candle hashes:
+The `dhanhq-client` gem already normalizes historical responses into an array of candle hashes in `DhanHQ::Models::HistoricalData.daily` and `DhanHQ::Models::HistoricalData.intraday`.
 
 ```ruby
-response = {
-  "open" => [100.0, 101.0],
-  "high" => [103.0, 104.0],
-  "low" => [99.0, 100.0],
-  "close" => [101.0, 103.0],
-  "volume" => [1200.0, 1500.0],
-  "timestamp" => [1704067200, 1704153600]
-}
+candles = DhanHQ::Models::HistoricalData.intraday(
+  security_id: "13",
+  exchange_segment: DhanHQ::Constants::ExchangeSegment::IDX_I,
+  instrument: DhanHQ::Constants::InstrumentType::INDEX,
+  interval: "5",
+  from_date: "2024-08-14",
+  to_date: "2024-08-14"
+)
 
-candles = response["close"].each_index.map do |i|
-  {
-    timestamp: response["timestamp"][i],
-    open: response["open"][i],
-    high: response["high"][i],
-    low: response["low"][i],
-    close: response["close"][i],
-    volume: response["volume"][i]
-  }
-end
+# candles.first
+# => {
+#      timestamp: 2024-08-14 09:15:00 +0530,
+#      open: 3750.0,
+#      high: 3757.9,
+#      low: 3746.1,
+#      close: 3751.25,
+#      volume: 53629
+#    }
 
 IndicatorHub.macd(candles, field: :close)
 IndicatorHub.vwap(candles)
 IndicatorHub.obv(candles)
 ```
+
+If you are working with Dhan's raw API payload before `dhanhq-client` normalizes it, then yes, you would first zip the parallel arrays into candle hashes.
 
 ### Normalizing In One Helper
 
@@ -507,6 +508,43 @@ atr = IndicatorHub.atr(data, period: 14)
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/shubhamtaywade/indicator_hub.
+
+## Release Process
+
+CI:
+
+- GitHub Actions runs on `main`, `master`, and pull requests
+- The CI workflow tests Ruby `3.2.0` and `3.3.4`
+- Each CI run executes `bundle exec rake` and verifies the gem builds successfully
+
+CD:
+
+- Releases are triggered by pushing a tag like `v0.1.0`
+- The release workflow validates that the tag matches `IndicatorHub::VERSION`
+- It runs the full test/lint suite, builds the gem, and publishes to RubyGems
+
+Required GitHub Actions secrets:
+
+- `RUBYGEMS_API_KEY`
+- `RUBYGEMS_OTP_SECRET`
+
+Typical release steps:
+
+```bash
+# 1. Update version
+# lib/indicator_hub/version.rb
+
+# 2. Update changelog
+# CHANGELOG.md
+
+# 3. Commit changes
+git add .
+git commit -m "Release v0.1.0"
+
+# 4. Create and push tag
+git tag v0.1.0
+git push origin main --tags
+```
 
 ## License
 
