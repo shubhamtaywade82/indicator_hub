@@ -230,6 +230,14 @@ RSpec.describe IndicatorHub do
       expect(result.size).to eq(sequential.size)
       expect(result.first).to be_nil
     end
+
+    it "returns percent rate of change of the triple EMA" do
+      data = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+      result = described_class.trix(data, period: 2)
+
+      expect(result[4]).to be_within(0.0001).of(40.0)
+      expect(result[5]).to be_within(0.0001).of(28.5714285714)
+    end
   end
 
   describe ".tsi" do
@@ -437,6 +445,20 @@ RSpec.describe IndicatorHub do
         end
       end
     end
+
+    it "applies percentage price change multiplicatively on lower-volume bars" do
+      data = [
+        { open: 100.0, high: 101.0, low: 99.0, close: 100.0, volume: 1000.0 },
+        { open: 100.0, high: 106.0, low: 99.0, close: 105.0, volume: 900.0 },
+        { open: 105.0, high: 108.0, low: 104.0, close: 107.1, volume: 800.0 }
+      ]
+
+      result = described_class.nvi(data)
+
+      expect(result[0]).to eq(1000.0)
+      expect(result[1]).to be_within(0.0001).of(1050.0)
+      expect(result[2]).to be_within(0.0001).of(1071.0)
+    end
   end
 
   describe ".obv" do
@@ -513,6 +535,22 @@ RSpec.describe IndicatorHub do
         expect(v[:k]).to be_between(0, 100)
         expect(v[:d]).to be_between(0, 100)
       end
+    end
+
+    it "passes through k_slowing via the public API" do
+      data = [
+        { open: 10.0, high: 12.0, low: 9.0, close: 11.0, volume: 100.0 },
+        { open: 11.0, high: 13.0, low: 10.0, close: 12.0, volume: 100.0 },
+        { open: 12.0, high: 14.0, low: 11.0, close: 13.0, volume: 100.0 },
+        { open: 13.0, high: 15.0, low: 12.0, close: 14.0, volume: 100.0 },
+        { open: 14.0, high: 16.0, low: 13.0, close: 15.0, volume: 100.0 },
+        { open: 15.0, high: 17.0, low: 14.0, close: 16.0, volume: 100.0 }
+      ]
+
+      direct = IndicatorHub::Indicators::SO.calculate(data, k_period: 3, k_slowing: 1, d_period: 2)
+      wrapped = described_class.so(data, k_period: 3, k_slowing: 1, d_period: 2)
+
+      expect(wrapped).to eq(direct)
     end
   end
 

@@ -43,7 +43,7 @@ module IndicatorHub
 
         output = Array.new(data.size, nil)
         (1...data.size).each do |i|
-          output[i] = (full_ema3[i] - full_ema3[i - 1]) / full_ema3[i - 1].to_f if full_ema3[i] && full_ema3[i - 1]
+          output[i] = (((full_ema3[i] - full_ema3[i - 1]) / full_ema3[i - 1].to_f) * 100.0) if full_ema3[i] && full_ema3[i - 1]
         end
 
         output

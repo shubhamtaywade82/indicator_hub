@@ -407,10 +407,11 @@ module IndicatorHub
   # Calculates the Stochastic Oscillator (SO).
   # @param data [Array<Hash, Numeric>] The input data (array of hashes or numbers).
   # @param k_period [Integer] The %K period.
+  # @param k_slowing [Integer] The %K slowing period.
   # @param d_period [Integer] The %D period.
   # @return [Array<Float, nil>] The calculated SO values.
-  def self.so(data, k_period: 14, d_period: 3)
-    Indicators::SO.calculate(normalize_ohlcv(data), k_period: k_period, d_period: d_period)
+  def self.so(data, k_period: 14, k_slowing: 3, d_period: 3)
+    Indicators::SO.calculate(normalize_ohlcv(data), k_period: k_period, k_slowing: k_slowing, d_period: d_period)
   end
 
   # Calculates the Ultimate Oscillator (UO).

@@ -28,8 +28,8 @@ module IndicatorHub
           volume_change = ((v[:volume] - prev_v[:volume]) / prev_v[:volume].to_f)
 
           if volume_change.negative?
-            price_change = ((v[:close] - prev_v[:close]) / prev_v[:close].to_f) * 100.00
-            nvi_cumulative += price_change
+            price_change = (v[:close] - prev_v[:close]) / prev_v[:close].to_f
+            nvi_cumulative *= (1.0 + price_change)
           end
 
           output << nvi_cumulative
